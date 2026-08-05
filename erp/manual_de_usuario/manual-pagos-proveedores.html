@@ -1,0 +1,2190 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual de usuario — Pagos a proveedores</title>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body, h1, h2, h3, h4, p, ol, ul, figure { margin: 0; padding: 0; }
+  ol, ul { list-style: none; }
+  img { max-width: 100%; display: block; }
+  table { border-collapse: collapse; }
+
+  :root {
+    color-scheme: light dark;
+
+    --verde: #106c37;
+    --verde-claro: #e6f4ec;
+    --verde-borde: #a8d5b5;
+
+    --ambar: #b45309;
+    --ambar-fondo: #fef3e2;
+    --rojo: #b91c1c;
+    --rojo-fondo: #fdecec;
+
+    --fondo: #f7f9f8;
+    --superficie: #ffffff;
+    --superficie-2: #eef2f0;
+    --texto: #121915;
+    --texto-suave: #5c6b64;
+    --texto-tenue: #8b9791;
+    --borde: #dde4e0;
+
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono: "Cascadia Mono", "Consolas", "SF Mono", "Roboto Mono", ui-monospace, monospace;
+
+    --ancho: 68ch;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --verde: #4ba86e;
+      --verde-claro: #14261c;
+      --verde-borde: #2f5c40;
+      --ambar: #e0a35c;
+      --ambar-fondo: #2a2013;
+      --rojo: #e88a8a;
+      --rojo-fondo: #2b1717;
+      --fondo: #0e1512;
+      --superficie: #151d19;
+      --superficie-2: #1c2621;
+      --texto: #e8efeb;
+      --texto-suave: #9fb0a7;
+      --texto-tenue: #71827a;
+      --borde: #263129;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --verde: #4ba86e;
+    --verde-claro: #14261c;
+    --verde-borde: #2f5c40;
+    --ambar: #e0a35c;
+    --ambar-fondo: #2a2013;
+    --rojo: #e88a8a;
+    --rojo-fondo: #2b1717;
+    --fondo: #0e1512;
+    --superficie: #151d19;
+    --superficie-2: #1c2621;
+    --texto: #e8efeb;
+    --texto-suave: #9fb0a7;
+    --texto-tenue: #71827a;
+    --borde: #263129;
+  }
+
+  :root[data-theme="light"] {
+    --verde: #106c37;
+    --verde-claro: #e6f4ec;
+    --verde-borde: #a8d5b5;
+    --ambar: #b45309;
+    --ambar-fondo: #fef3e2;
+    --rojo: #b91c1c;
+    --rojo-fondo: #fdecec;
+    --fondo: #f7f9f8;
+    --superficie: #ffffff;
+    --superficie-2: #eef2f0;
+    --texto: #121915;
+    --texto-suave: #5c6b64;
+    --texto-tenue: #8b9791;
+    --borde: #dde4e0;
+  }
+
+  body {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Cascarón ───────────────────────────────────────────── */
+
+  .cascaron {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+    display: grid;
+    grid-template-columns: 232px minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .cascaron { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  }
+
+  /* ── Portada ────────────────────────────────────────────── */
+
+  .portada {
+    grid-column: 1 / -1;
+    padding: 72px 0 44px;
+    border-bottom: 2px solid var(--texto);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .marca {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--verde);
+    font-weight: 600;
+  }
+
+  .portada h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 6vw, 3.7rem);
+    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .bajada {
+    max-width: var(--ancho);
+    color: var(--texto-suave);
+    font-size: 1.06rem;
+  }
+
+  .meta-portada {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--texto-tenue);
+    letter-spacing: 0.04em;
+    padding-top: 6px;
+  }
+
+  .meta-portada b { color: var(--texto-suave); font-weight: 600; }
+
+  /* ── Índice lateral ─────────────────────────────────────── */
+
+  .indice {
+    position: sticky;
+    top: 32px;
+    padding-top: 52px;
+    font-size: 0.87rem;
+  }
+
+  @media (max-width: 900px) {
+    .indice {
+      position: static;
+      padding: 32px 0 8px;
+      border-bottom: 1px solid var(--borde);
+      margin-bottom: 24px;
+    }
+  }
+
+  .indice-titulo {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--texto-tenue);
+    margin-bottom: 14px;
+  }
+
+  .indice ol {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    counter-reset: nav;
+  }
+
+  .indice a {
+    display: flex;
+    gap: 10px;
+    padding: 5px 0;
+    color: var(--texto-suave);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .indice li { counter-increment: nav; }
+
+  .indice a::before {
+    content: counter(nav, decimal-leading-zero);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--texto-tenue);
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .indice a:hover,
+  .indice a:focus-visible {
+    color: var(--verde);
+    outline: none;
+  }
+
+  .indice a:hover::before,
+  .indice a:focus-visible::before { color: var(--verde); }
+
+  /* ── Contenido ──────────────────────────────────────────── */
+
+  .contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    padding-top: 52px;
+    min-width: 0;
+  }
+
+  section { scroll-margin-top: 24px; }
+
+  .encabezado-seccion {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 26px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .numero {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: var(--verde);
+    font-weight: 600;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3.2vw, 2.1rem);
+    font-weight: 600;
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  h3 {
+    font-size: 1.06rem;
+    font-weight: 650;
+    line-height: 1.35;
+    margin: 34px 0 12px;
+    text-wrap: balance;
+  }
+
+  h3:first-of-type { margin-top: 0; }
+
+  h4 {
+    font-family: var(--mono);
+    font-size: 0.73rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--texto-tenue);
+    font-weight: 600;
+    margin: 26px 0 10px;
+  }
+
+  p, li { max-width: var(--ancho); }
+
+  p { margin: 0 0 14px; }
+
+  .contenido ul, .contenido ol { margin: 0 0 16px; padding-left: 22px; }
+  .contenido ul { list-style: disc; }
+  .contenido ol { list-style: decimal; }
+  .contenido li { margin-bottom: 7px; }
+  .contenido li::marker { color: var(--texto-tenue); }
+
+  strong { font-weight: 650; }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: var(--superficie-2);
+    border: 1px solid var(--borde);
+    border-radius: 3px;
+    padding: 1px 5px;
+    white-space: nowrap;
+  }
+
+  /* ── Ruta de navegación ─────────────────────────────────── */
+
+  .ruta {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 0.79rem;
+    background: var(--verde-claro);
+    border: 1px solid var(--verde-borde);
+    border-radius: 4px;
+    padding: 7px 12px;
+    color: var(--verde);
+    margin-bottom: 18px;
+  }
+
+  .ruta span[aria-hidden] { opacity: 0.5; }
+
+  /* ── Pasos numerados ────────────────────────────────────── */
+
+  .pasos {
+    list-style: none !important;
+    counter-reset: paso;
+    padding-left: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  .pasos > li {
+    counter-increment: paso;
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 14px;
+    max-width: none;
+    margin: 0 !important;
+  }
+
+  .pasos > li::before {
+    content: counter(paso);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--verde);
+    background: var(--verde-claro);
+    border: 1px solid var(--verde-borde);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .pasos > li > *:last-child { margin-bottom: 0; }
+
+  .pasos .detalle {
+    margin: 8px 0 0;
+    padding-left: 18px;
+    list-style: disc;
+    color: var(--texto-suave);
+    font-size: 0.95rem;
+  }
+
+  /* ── Tablas ─────────────────────────────────────────────── */
+
+  .tabla-envoltorio {
+    overflow-x: auto;
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    background: var(--superficie);
+    margin-bottom: 18px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  thead th {
+    background: var(--verde);
+    color: #fff;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 11px 14px;
+    border-top: 1px solid var(--borde);
+    vertical-align: top;
+  }
+
+  tbody tr:nth-child(even) td { background: var(--superficie-2); }
+
+  td:first-child { font-weight: 600; white-space: nowrap; }
+
+  /* ── Etiquetas de estado ────────────────────────────────── */
+
+  .etiqueta {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.71rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .et-ok { background: var(--verde-claro); color: var(--verde); border: 1px solid var(--verde-borde); }
+  .et-espera { background: var(--ambar-fondo); color: var(--ambar); border: 1px solid var(--ambar); }
+  .et-alto { background: var(--rojo-fondo); color: var(--rojo); border: 1px solid var(--rojo); }
+
+  /* ── Avisos ─────────────────────────────────────────────── */
+
+  .aviso {
+    border-left: 3px solid var(--verde);
+    background: var(--superficie);
+    border-top: 1px solid var(--borde);
+    border-right: 1px solid var(--borde);
+    border-bottom: 1px solid var(--borde);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 0 0 18px;
+    max-width: var(--ancho);
+  }
+
+  .aviso p:last-child { margin-bottom: 0; }
+
+  .aviso-titulo {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--verde);
+    margin-bottom: 6px;
+  }
+
+  .aviso.cuidado { border-left-color: var(--ambar); }
+  .aviso.cuidado .aviso-titulo { color: var(--ambar); }
+  .aviso.alto { border-left-color: var(--rojo); }
+  .aviso.alto .aviso-titulo { color: var(--rojo); }
+
+  /* ── Fórmula del cálculo ────────────────────────────────── */
+
+  .formula {
+    background: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+    overflow-x: auto;
+  }
+
+  .formula ol {
+    list-style: none !important;
+    padding-left: 0 !important;
+    counter-reset: linea;
+    margin: 0 !important;
+    font-family: var(--mono);
+    font-size: 0.88rem;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 380px;
+  }
+
+  .formula li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: baseline;
+    margin: 0 !important;
+    max-width: none;
+    white-space: nowrap;
+  }
+
+  .formula .op { color: var(--texto-tenue); }
+
+  .formula .total {
+    border-top: 1px solid var(--borde);
+    padding-top: 10px;
+    font-weight: 700;
+    color: var(--verde);
+  }
+
+  .formula .nota-linea {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    color: var(--texto-tenue);
+    white-space: normal;
+  }
+
+  /* ── Fichas de acción ───────────────────────────────────── */
+
+  .fichas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .ficha {
+    background: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+
+  .ficha-nombre {
+    font-weight: 650;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+  }
+
+  .ficha p {
+    margin: 0;
+    font-size: 0.89rem;
+    color: var(--texto-suave);
+    max-width: none;
+  }
+
+  /* ── Figuras y diagramas de pantalla ────────────────────── */
+
+  figure {
+    margin: 0 0 22px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    background: var(--superficie);
+    overflow: hidden;
+  }
+
+  .barra-ventana {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    background: var(--superficie-2);
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .punto {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--borde);
+    flex-shrink: 0;
+  }
+
+  .titulo-ventana {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--texto-tenue);
+    margin-left: 6px;
+    letter-spacing: 0.03em;
+  }
+
+  .lienzo {
+    overflow-x: auto;
+    padding: 4px;
+  }
+
+  figure svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 520px;
+  }
+
+  figcaption {
+    padding: 10px 14px;
+    border-top: 1px solid var(--borde);
+    font-size: 0.85rem;
+    color: var(--texto-suave);
+    background: var(--superficie-2);
+  }
+
+  figcaption b {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--verde);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* Piezas reutilizables dentro de los SVG */
+  .sv-panel { fill: var(--superficie); stroke: var(--borde); }
+  .sv-hueco { fill: var(--superficie-2); stroke: var(--borde); }
+  .sv-cabecera { fill: var(--verde); }
+  .sv-acento { fill: var(--verde-claro); stroke: var(--verde-borde); }
+  .sv-linea { stroke: var(--borde); fill: none; }
+  .sv-guia { stroke: var(--verde); fill: none; stroke-dasharray: 3 3; }
+
+  .sv-t { font-family: var(--sans); font-size: 11px; fill: var(--texto); }
+  .sv-t-suave { font-family: var(--sans); font-size: 10.5px; fill: var(--texto-suave); }
+  .sv-t-tenue { font-family: var(--sans); font-size: 10px; fill: var(--texto-tenue); }
+  .sv-t-blanco { font-family: var(--sans); font-size: 10.5px; fill: #fff; font-weight: 600; }
+  .sv-t-verde { font-family: var(--sans); font-size: 11px; fill: var(--verde); font-weight: 600; }
+  .sv-t-titulo { font-family: var(--sans); font-size: 13px; fill: var(--texto); font-weight: 700; }
+  .sv-t-mono { font-family: var(--mono); font-size: 10px; fill: var(--texto-suave); }
+
+  /* Globos numerados que señalan partes de la pantalla */
+  .sv-globo { fill: var(--verde); }
+  .sv-globo-t { font-family: var(--mono); font-size: 9.5px; fill: #fff; font-weight: 700; }
+
+  .leyenda {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 0 22px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    counter-reset: pista;
+  }
+
+  .leyenda li {
+    counter-increment: pista;
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 4px 12px;
+    margin: 0 !important;
+    font-size: 0.94rem;
+  }
+
+  .leyenda li::before {
+    content: counter(pista);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--verde);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  /* Nombre del elemento señalado, en su propia línea */
+  .leyenda b {
+    grid-column: 2;
+    font-weight: 650;
+    line-height: 1.4;
+  }
+
+  .leyenda b .donde {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--texto-tenue);
+    margin-left: 7px;
+    white-space: nowrap;
+  }
+
+  /* Descripción debajo, en tono más suave */
+  .leyenda span.que {
+    grid-column: 2;
+    color: var(--texto-suave);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  /* ── Pie ────────────────────────────────────────────────── */
+
+  .pie {
+    grid-column: 1 / -1;
+    margin-top: 24px;
+    padding-top: 22px;
+    border-top: 1px solid var(--borde);
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--texto-tenue);
+    letter-spacing: 0.04em;
+  }
+
+  a { color: var(--verde); }
+
+  :focus-visible {
+    outline: 2px solid var(--verde);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* ── Impresión ──────────────────────────────────────────── */
+
+  @media print {
+    :root {
+      --fondo: #fff;
+      --superficie: #fff;
+      --superficie-2: #f4f6f5;
+      --texto: #000;
+      --texto-suave: #333;
+      --texto-tenue: #666;
+      --borde: #ccc;
+    }
+    .indice { display: none; }
+    .cascaron { grid-template-columns: minmax(0, 1fr); max-width: none; padding: 0; }
+    .portada { padding-top: 0; }
+    section { break-inside: avoid-page; }
+    h2, h3 { break-after: avoid-page; }
+    .tabla-envoltorio, .aviso, .formula, .pasos > li { break-inside: avoid; }
+    a { color: var(--texto); text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cascaron">
+
+  <header class="portada">
+    <div class="marca">Refaccionaria Victorino · Manual de usuario</div>
+    <h1>Pagos a proveedores</h1>
+    <p class="bajada">
+      Cómo consultar las facturas que se le deben a un proveedor, registrar el pago
+      de una o varias de ellas, aplicar notas de crédito y descuentos, y dar
+      seguimiento hasta que el pago queda confirmado.
+    </p>
+    <div class="meta-portada">
+      <span><b>Módulo:</b> Proveedores › Pagos</span>
+      <span><b>Permiso requerido:</b> supplier_payments.manage</span>
+      <span><b>Versión:</b> 05-08-2026</span>
+    </div>
+  </header>
+
+  <nav class="indice" aria-label="Índice del manual">
+    <div class="indice-titulo">Contenido</div>
+    <ol>
+      <li><a href="#panorama">Panorama del módulo</a></li>
+      <li><a href="#acceso">Cómo entrar</a></li>
+      <li><a href="#configuracion">Configurar el proveedor</a></li>
+      <li><a href="#descuentos">Descuentos del proveedor</a></li>
+      <li><a href="#bancarios">Datos bancarios</a></li>
+      <li><a href="#facturas">Consultar facturas</a></li>
+      <li><a href="#registrar">Registrar un pago</a></li>
+      <li><a href="#calculo">Cómo se calcula el total</a></li>
+      <li><a href="#notas">Notas de crédito</a></li>
+      <li><a href="#historial">Historial y seguimiento</a></li>
+      <li><a href="#global">Vista de todos los pagos</a></li>
+      <li><a href="#pronostico">Pronóstico de pagos</a></li>
+      <li><a href="#dudas">Preguntas frecuentes</a></li>
+    </ol>
+  </nav>
+
+  <main class="contenido">
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="panorama">
+      <div class="encabezado-seccion">
+        <div class="numero">01</div>
+        <h2>Panorama del módulo</h2>
+      </div>
+
+      <p>
+        El módulo de pagos a proveedores resuelve una pregunta concreta:
+        <strong>qué le debemos a este proveedor y cómo se lo pagamos</strong>.
+        Las facturas llegan al sistema cuando se recibe la mercancía; aquí se
+        seleccionan las que se van a liquidar, se descuentan las notas de crédito
+        y los descuentos negociados, y queda el registro del pago.
+      </p>
+
+      <p>Un pago pasa siempre por tres estados:</p>
+
+      <div class="tabla-envoltorio">
+        <table>
+          <thead>
+            <tr>
+              <th>Estado</th>
+              <th>Qué significa</th>
+              <th>Qué se puede hacer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="etiqueta et-espera">Pendiente</span></td>
+              <td>El pago quedó registrado, pero todavía no se confirma que el dinero salió.</td>
+              <td>Marcarlo como pagado, cancelarlo, editar referencia y notas.</td>
+            </tr>
+            <tr>
+              <td><span class="etiqueta et-ok">Pagado</span></td>
+              <td>El pago se confirmó. Se guarda quién lo confirmó y en qué fecha.</td>
+              <td>Solo consulta: ver detalle, descargar PDF, editar notas.</td>
+            </tr>
+            <tr>
+              <td><span class="etiqueta et-alto">Cancelado</span></td>
+              <td>El pago se anuló. Las facturas vuelven a quedar por pagar.</td>
+              <td>Solo consulta.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="aviso">
+        <div class="aviso-titulo">Recuerde</div>
+        <p>
+          Registrar un pago no es lo mismo que confirmarlo. Un pago recién creado
+          nace <strong>Pendiente</strong>; alguien debe marcarlo como pagado cuando
+          la transferencia, el cheque o el efectivo realmente salieron.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="acceso">
+      <div class="encabezado-seccion">
+        <div class="numero">02</div>
+        <h2>Cómo entrar</h2>
+      </div>
+
+      <p>Hay tres entradas distintas, según lo que necesite hacer.</p>
+
+      <h3>Para trabajar con un proveedor en particular</h3>
+      <div class="ruta">
+        <span>Proveedores</span><span aria-hidden>›</span>
+        <span>buscar el proveedor</span><span aria-hidden>›</span>
+        <span>botón de talonario</span>
+      </div>
+      <p>
+        En la lista de proveedores, cada renglón tiene una fila de botones a la
+        derecha. El botón con el ícono de <strong>talonario de cheques</strong> abre
+        la gestión de pagos de ese proveedor. Es la pantalla principal del módulo y
+        donde se registran los pagos.
+      </p>
+
+      <h3>Para ver todos los pagos de todos los proveedores</h3>
+      <div class="ruta">
+        <span>Menú lateral</span><span aria-hidden>›</span>
+        <span>Proveedores</span><span aria-hidden>›</span>
+        <span>Pagos</span>
+      </div>
+      <p>
+        Un listado general con todos los pagos registrados en el sistema, con
+        filtros por proveedor, método, tipo, estado y fechas.
+      </p>
+
+      <h3>Para saber cuánto hay que pagar en los próximos días</h3>
+      <div class="ruta">
+        <span>Menú lateral</span><span aria-hidden>›</span>
+        <span>Proveedores</span><span aria-hidden>›</span>
+        <span>Pronóstico de pagos</span>
+      </div>
+
+      <div class="aviso cuidado">
+        <div class="aviso-titulo">Si no ve estas opciones</div>
+        <p>
+          Las tres entradas requieren el permiso <code>supplier_payments.manage</code>.
+          Si el botón de talonario o las opciones del menú no aparecen, pida a un
+          administrador que le asigne el permiso.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="configuracion">
+      <div class="encabezado-seccion">
+        <div class="numero">03</div>
+        <h2>Configurar el proveedor</h2>
+      </div>
+
+      <p>
+        Antes de registrar el primer pago conviene dejar configurado el proveedor.
+        Dos ajustes hacen que el formulario de pago se llene casi solo:
+        los <strong>descuentos</strong> y los <strong>datos bancarios</strong>.
+        Ambos se capturan desde la fila de botones de la lista de proveedores.
+      </p>
+
+      <figure>
+        <div class="barra-ventana">
+          <span class="punto"></span><span class="punto"></span><span class="punto"></span>
+          <span class="titulo-ventana">Proveedores — fila de acciones</span>
+        </div>
+        <div class="lienzo">
+          <svg viewBox="0 0 620 132" role="img" aria-label="Fila de un proveedor con sus seis botones de acción">
+            <rect x="10" y="14" width="600" height="46" rx="5" class="sv-panel" stroke-width="1"/>
+            <text x="26" y="33" class="sv-t" font-weight="600">ACME Refacciones S.A. de C.V.</text>
+            <text x="26" y="49" class="sv-t-mono">RFC: ARE920101ABC</text>
+
+            <!-- Botones -->
+            <circle cx="352" cy="37" r="15" class="sv-hueco" stroke-width="1"/>
+            <text x="352" y="41" text-anchor="middle" class="sv-t-verde" font-size="13">$</text>
+
+            <circle cx="392" cy="37" r="15" class="sv-hueco" stroke-width="1"/>
+            <text x="392" y="41" text-anchor="middle" class="sv-t-verde" font-size="12">%</text>
+
+            <circle cx="432" cy="37" r="15" class="sv-acento" stroke-width="1.5"/>
+            <rect x="425" y="32" width="14" height="10" rx="1.5" class="sv-linea" stroke-width="1.2"/>
+            <line x1="425" y1="36" x2="439" y2="36" class="sv-linea" stroke-width="1.2"/>
+
+            <circle cx="472" cy="37" r="15" class="sv-hueco" stroke-width="1"/>
+            <circle cx="472" cy="37" r="5" class="sv-linea" stroke-width="1.2"/>
+            <circle cx="472" cy="37" r="1.6" fill="var(--texto-suave)"/>
+
+            <circle cx="512" cy="37" r="15" class="sv-hueco" stroke-width="1"/>
+            <path d="M506 42 L516 32 L518 34 L508 44 Z" class="sv-linea" stroke-width="1.2"/>
+
+            <circle cx="552" cy="37" r="15" class="sv-hueco" stroke-width="1"/>
+            <text x="552" y="41" text-anchor="middle" class="sv-t-suave" font-size="11">f(x)</text>
+
+            <!-- Globos -->
+            <circle cx="352" cy="70" r="9" class="sv-globo"/>
+            <text x="352" y="73.5" text-anchor="middle" class="sv-globo-t">1</text>
+            <circle cx="392" cy="70" r="9" class="sv-globo"/>
+            <text x="392" y="73.5" text-anchor="middle" class="sv-globo-t">2</text>
+            <circle cx="432" cy="70" r="9" class="sv-globo"/>
+            <text x="432" y="73.5" text-anchor="middle" class="sv-globo-t">3</text>
+
+            <text x="26" y="96" class="sv-t-tenue">Los tres botones restantes son: ver proveedor, editar y editar factores.</text>
+            <text x="26" y="114" class="sv-t-tenue">El botón de eliminar aparece al final de la fila.</text>
+          </svg>
+        </div>
+        <figcaption>
+          <b>Lista de proveedores</b>
+          Cada renglón tiene su fila de botones a la derecha. Los tres señalados son los
+          que interesan para pagos.
+        </figcaption>
+      </figure>
+
+      <ol class="leyenda">
+        <li>
+          <b>Datos bancarios <span class="donde">ícono de billetes</span></b>
+          <span class="que">Cuenta, método y referencia con los que se precarga el formulario de pago.</span>
+        </li>
+        <li>
+          <b>Descuentos del proveedor <span class="donde">ícono de etiqueta</span></b>
+          <span class="que">Los porcentajes negociados con el proveedor.</span>
+        </li>
+        <li>
+          <b>Gestión de pagos <span class="donde">ícono de talonario</span></b>
+          <span class="que">La pantalla principal del módulo, donde se registran los pagos.</span>
+        </li>
+      </ol>
+
+      <div class="aviso">
+        <div class="aviso-titulo">Por qué vale la pena configurarlos</div>
+        <p>
+          Con ambos capturados, al abrir <em>Nuevo pago</em> el método, el tipo, la
+          referencia y el descuento principal ya vienen puestos. Solo hay que marcar
+          las facturas y registrar.
+        </p>
+        <p>
+          Los <a href="#descuentos">descuentos se capturan en la sección 4</a> y los
+          <a href="#bancarios">datos bancarios en la 5</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="descuentos">
+      <div class="encabezado-seccion">
+        <div class="numero">04</div>
+        <h2>Dar de alta descuentos del proveedor</h2>
+      </div>
+
+      <div class="ruta">
+        <span>Proveedores</span><span aria-hidden>›</span>
+        <span>buscar el proveedor</span><span aria-hidden>›</span>
+        <span>botón de etiqueta</span>
+      </div>
+
+      <p>
+        Un proveedor puede tener varios descuentos negociados — por pronto pago, por
+        volumen, por temporada. Aquí se capturan todos, y se marca cuál es el
+        <strong>principal</strong>: ese será el que se aplique por omisión al registrar
+        un pago.
+      </p>
+
+      <figure>
+        <div class="barra-ventana">
+          <span class="punto"></span><span class="punto"></span><span class="punto"></span>
+          <span class="titulo-ventana">Descuentos del proveedor</span>
+        </div>
+        <div class="lienzo">
+          <svg viewBox="0 0 620 268" role="img" aria-label="Ventana de descuentos del proveedor con dos renglones capturados">
+            <rect x="10" y="10" width="600" height="248" rx="7" class="sv-panel" stroke-width="1"/>
+            <text x="30" y="38" class="sv-t-titulo">Descuentos del proveedor</text>
+            <line x1="10" y1="52" x2="610" y2="52" class="sv-linea" stroke-width="1"/>
+
+            <!-- Renglón 1 -->
+            <rect x="30" y="68" width="286" height="40" rx="5" class="sv-hueco" stroke-width="1"/>
+            <text x="42" y="83" class="sv-t-tenue">Nombre</text>
+            <text x="42" y="99" class="sv-t">Pronto pago</text>
+
+            <rect x="326" y="68" width="116" height="40" rx="5" class="sv-hueco" stroke-width="1"/>
+            <text x="338" y="83" class="sv-t-tenue">Porcentaje</text>
+            <text x="338" y="99" class="sv-t">5</text>
+            <text x="428" y="99" class="sv-t-suave">%</text>
+
+            <rect x="454" y="80" width="15" height="15" rx="3" class="sv-cabecera"/>
+            <path d="M457.5 87.5 L460.5 90.5 L466 84.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="476" y="93" class="sv-t">Principal</text>
+
+            <circle cx="570" cy="88" r="14" class="sv-hueco" stroke-width="1"/>
+            <path d="M564 83 h12 M566 83 v10 h8 v-10 M569 80 h6" class="sv-linea" stroke-width="1.2" stroke-linecap="round"/>
+
+            <!-- Renglón 2 -->
+            <rect x="30" y="120" width="286" height="40" rx="5" class="sv-hueco" stroke-width="1"/>
+            <text x="42" y="135" class="sv-t-tenue">Nombre</text>
+            <text x="42" y="151" class="sv-t">Volumen</text>
+
+            <rect x="326" y="120" width="116" height="40" rx="5" class="sv-hueco" stroke-width="1"/>
+            <text x="338" y="135" class="sv-t-tenue">Porcentaje</text>
+            <text x="338" y="151" class="sv-t">3.5</text>
+            <text x="428" y="151" class="sv-t-suave">%</text>
+
+            <rect x="454" y="132" width="15" height="15" rx="3" fill="none" stroke="var(--texto-tenue)" stroke-width="1.3"/>
+            <text x="476" y="145" class="sv-t">Principal</text>
+
+            <circle cx="570" cy="140" r="14" class="sv-hueco" stroke-width="1"/>
+            <path d="M564 135 h12 M566 135 v10 h8 v-10 M569 132 h6" class="sv-linea" stroke-width="1.2" stroke-linecap="round"/>
+
+            <!-- Agregar -->
+            <rect x="30" y="176" width="150" height="30" rx="5" class="sv-hueco" stroke-width="1"/>
+            <text x="105" y="195" text-anchor="middle" class="sv-t">Agregar descuento</text>
+
+            <line x1="10" y1="220" x2="610" y2="220" class="sv-linea" stroke-width="1"/>
+            <rect x="404" y="230" width="76" height="30" rx="5" class="sv-hueco" stroke-width="1"/>
+            <text x="442" y="249" text-anchor="middle" class="sv-t">Cerrar</text>
+            <rect x="490" y="230" width="120" height="30" rx="5" class="sv-cabecera"/>
+            <text x="550" y="249" text-anchor="middle" class="sv-t-blanco">Guardar cambios</text>
+
+            <!-- Globos -->
+            <circle cx="176" cy="66" r="9" class="sv-globo"/>
+            <text x="176" y="69.5" text-anchor="middle" class="sv-globo-t">1</text>
+            <circle cx="384" cy="66" r="9" class="sv-globo"/>
+            <text x="384" y="69.5" text-anchor="middle" class="sv-globo-t">2</text>
+            <circle cx="461" cy="66" r="9" class="sv-globo"/>
+            <text x="461" y="69.5" text-anchor="middle" class="sv-globo-t">3</text>
+            <circle cx="596" cy="66" r="9" class="sv-globo"/>
+            <text x="596" y="69.5" text-anchor="middle" class="sv-globo-t">4</text>
+          </svg>
+        </div>
+        <figcaption>
+          <b>Ventana de descuentos</b>
+          Cada renglón es un descuento. Se guardan todos juntos al presionar
+          <em>Guardar cambios</em>.
+        </figcaption>
+      </figure>
+
+      <ol class="leyenda">
+        <li>
+          <b>Nombre <span class="donde">obligatorio</span></b>
+          <span class="que">Cómo se llama el descuento. Por ejemplo, <em>Pronto pago</em>.</span>
+        </li>
+        <li>
+          <b>Porcentaje <span class="donde">0 a 100</span></b>
+          <span class="que">Solo el número, sin el signo.</span>
+        </li>
+        <li>
+          <b>Principal</b>
+          <span class="que">Marca cuál descuento se aplica por omisión. Solo puede haber uno.</span>
+        </li>
+        <li>
+          <b>Eliminar</b>
+          <span class="que">Quita ese renglón de la lista.</span>
+        </li>
+      </ol>
+
+      <h3>Paso a paso</h3>
+      <ol class="pasos">
+        <li>
+          <div>
+            <strong>Abra la ventana</strong> con el botón de etiqueta en la fila del proveedor.
+            <p>Si el proveedor no tiene ninguno, verá el mensaje <em>"Este proveedor no tiene descuentos. Agrega uno."</em></p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Presione <em>Agregar descuento</em>.</strong>
+            <p>Aparece un renglón vacío. El primero que agregue queda marcado como principal automáticamente.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Escriba nombre y porcentaje.</strong>
+            <ul class="detalle">
+              <li>El campo de porcentaje solo acepta números y punto decimal.</li>
+              <li>Escriba <code>5</code> para un 5 %, no <code>0.05</code>.</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Marque el principal.</strong>
+            <p>
+              Solo puede haber uno: al marcar una casilla, la anterior se desmarca sola.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Repita para los demás y presione <em>Guardar cambios</em>.</strong>
+            <p>Un mensaje verde confirma que se guardaron.</p>
+          </div>
+        </li>
+      </ol>
+
+      <h4>Mensajes de error al guardar</h4>
+      <div class="tabla-envoltorio">
+        <table>
+          <thead>
+            <tr><th>Mensaje</th><th>Qué corregir</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Todos los descuentos deben tener un nombre</td><td>Algún renglón quedó sin nombre. Llénelo o elimínelo.</td></tr>
+            <tr><td>Todos los descuentos deben tener un porcentaje</td><td>Falta el número en algún renglón.</td></tr>
+            <tr><td>No se pueden utilizar porcentajes negativos</td><td>Revise que ningún porcentaje sea menor que cero.</td></tr>
+            <tr><td>El porcentaje no puede ser mayor a 100</td><td>Revise que ninguno pase de 100.</td></tr>
+            <tr><td>Debes seleccionar un descuento principal</td><td>Marque la casilla <em>Principal</em> en uno de los renglones.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="aviso cuidado">
+        <div class="aviso-titulo">Se guarda la lista completa</div>
+        <p>
+          Al presionar <em>Guardar cambios</em> se reemplaza toda la lista de descuentos
+          del proveedor con lo que quedó en pantalla. Si eliminó un renglón por error,
+          cierre <strong>sin guardar</strong> y vuelva a abrir: se recupera lo anterior.
+        </p>
+      </div>
+
+      <div class="aviso">
+        <div class="aviso-titulo">Cómo se usan al pagar</div>
+        <p>
+          En <em>Nuevo pago</em>, el selector de <strong>Descuento</strong> lista estos
+          descuentos con su nombre y porcentaje, y el principal aparece marcado como tal
+          y preseleccionado. También puede escribir un porcentaje distinto con la opción
+          <em>Otro</em> sin tener que darlo de alta aquí.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="bancarios">
+      <div class="encabezado-seccion">
+        <div class="numero">05</div>
+        <h2>Datos bancarios del proveedor</h2>
+      </div>
+
+      <div class="ruta">
+        <span>Proveedores</span><span aria-hidden>›</span>
+        <span>buscar el proveedor</span><span aria-hidden>›</span>
+        <span>botón de billetes</span>
+      </div>
+
+      <p>
+        Aquí se guarda a dónde y cómo se le paga a este proveedor: número de cuenta,
+        clave interbancaria, concepto y referencia habituales. Sirve para dos cosas:
+        tener los datos a la mano al hacer la transferencia, y
+        <strong>precargar el formulario de pago</strong>.
+      </p>
+
+      <div class="aviso cuidado">
+        <div class="aviso-titulo">Sobre datos de tarjeta</div>
+        <p>
+          Esta pantalla <strong>no guarda números de tarjeta</strong>. Registra datos de
+          cuenta bancaria para transferencias. <em>Tarjeta</em> existe únicamente como
+          método al momento de registrar un pago, sin capturar sus dígitos.
+        </p>
+      </div>
+
+      <figure>
+        <div class="barra-ventana">
+          <span class="punto"></span><span class="punto"></span><span class="punto"></span>
+          <span class="titulo-ventana">Datos bancarios</span>
+        </div>
+        <div class="lienzo">
+          <svg viewBox="0 0 620 244" role="img" aria-label="Ventana de datos bancarios con sus cinco campos">
+            <rect x="10" y="10" width="600" height="224" rx="7" class="sv-panel" stroke-width="1"/>
+            <text x="30" y="38" class="sv-t-titulo">Datos bancarios</text>
+            <line x1="10" y1="52" x2="610" y2="52" class="sv-linea" stroke-width="1"/>
+
+            <!-- Fila 1 -->
+            <rect x="30" y="70" width="176" height="42" rx="5" class="sv-hueco" stroke-width="1"/>
+            <text x="42" y="86" class="sv-t-tenue">Cuenta *</text>
+            <text x="42" y="103" class="sv-t">0123456789</text>
+
+            <rect x="216" y="70" width="176" height="42" rx="5" class="sv-hueco" stroke-width="1"/>
+            <text x="228" y="86" class="sv-t-tenue">Concepto</text>
+            <text x="228" y="103" class="sv-t">Pago de facturas</text>
+
+            <rect x="402" y="70" width="188" height="42" rx="5" class="sv-hueco" stroke-width="1"/>
+            <text x="414" y="86" class="sv-t-tenue">Método de pago</text>
+            <text x="414" y="103" class="sv-t">Transferencia</text>
+            <path d="M572 94 l5 5 l5 -5" class="sv-linea" stroke-width="1.4" stroke-linecap="round"/>
+
+            <!-- Fila 2 -->
+            <rect x="30" y="126" width="270" height="42" rx="5" class="sv-hueco" stroke-width="1"/>
+            <text x="42" y="142" class="sv-t-tenue">Referencia</text>
+            <text x="42" y="159" class="sv-t">REF-ACME-001</text>
+
+            <rect x="310" y="126" width="280" height="42" rx="5" class="sv-hueco" stroke-width="1"/>
+            <text x="322" y="142" class="sv-t-tenue">Clave interbancaria</text>
+            <text x="322" y="159" class="sv-t">012180001234567895</text>
+
+            <!-- Pie -->
+            <line x1="10" y1="186" x2="610" y2="186" class="sv-linea" stroke-width="1"/>
+            <rect x="424" y="196" width="84" height="30" rx="5" class="sv-hueco" stroke-width="1"/>
+            <text x="466" y="215" text-anchor="middle" class="sv-t">Cancelar</text>
+            <rect x="518" y="196" width="92" height="30" rx="5" class="sv-cabecera"/>
+            <text x="564" y="215" text-anchor="middle" class="sv-t-blanco">Guardar</text>
+
+            <!-- Globos -->
+            <circle cx="118" cy="66" r="9" class="sv-globo"/>
+            <text x="118" y="69.5" text-anchor="middle" class="sv-globo-t">1</text>
+            <circle cx="304" cy="66" r="9" class="sv-globo"/>
+            <text x="304" y="69.5" text-anchor="middle" class="sv-globo-t">2</text>
+            <circle cx="496" cy="66" r="9" class="sv-globo"/>
+            <text x="496" y="69.5" text-anchor="middle" class="sv-globo-t">3</text>
+            <circle cx="165" cy="122" r="9" class="sv-globo"/>
+            <text x="165" y="125.5" text-anchor="middle" class="sv-globo-t">4</text>
+            <circle cx="450" cy="122" r="9" class="sv-globo"/>
+            <text x="450" y="125.5" text-anchor="middle" class="sv-globo-t">5</text>
+          </svg>
+        </div>
+        <figcaption>
+          <b>Ventana de datos bancarios</b>
+          Solo el campo <em>Cuenta</em> es obligatorio; los demás son opcionales pero
+          recomendables.
+        </figcaption>
+      </figure>
+
+      <ol class="leyenda">
+        <li>
+          <b>Cuenta <span class="donde">obligatorio</span></b>
+          <span class="que">El número de cuenta del proveedor.</span>
+        </li>
+        <li>
+          <b>Concepto</b>
+          <span class="que">El concepto con el que suele hacerse la transferencia.</span>
+        </li>
+        <li>
+          <b>Método de pago</b>
+          <span class="que">Transferencia o Efectivo.</span>
+        </li>
+        <li>
+          <b>Referencia</b>
+          <span class="que">La referencia habitual del proveedor.</span>
+        </li>
+        <li>
+          <b>Clave interbancaria</b>
+          <span class="que">La CLABE de 18 dígitos.</span>
+        </li>
+      </ol>
+
+      <h3>Paso a paso</h3>
+      <ol class="pasos">
+        <li><div><strong>Abra la ventana</strong> con el botón de billetes en la fila del proveedor.</div></li>
+        <li>
+          <div>
+            <strong>Llene los campos.</strong>
+            <p>Si el proveedor ya tenía datos capturados, vienen cargados y puede corregirlos.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Presione <em>Guardar</em>.</strong>
+            <p>
+              Si algún dato es inválido, aparecen mensajes rojos indicando qué corregir.
+              Al guardar bien, la ventana se cierra sola.
+            </p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="aviso">
+        <div class="aviso-titulo">Cómo se reflejan al pagar</div>
+        <p>
+          En <em>Nuevo pago</em>, el <strong>método de pago</strong> y la
+          <strong>referencia</strong> aparecen ya llenos, con la etiqueta
+          <em>"Precargado del proveedor — puedes cambiarlo"</em>. Son una sugerencia:
+          si este pago en particular se hace en efectivo o con otra referencia,
+          sobrescríbalos sin problema.
+        </p>
+      </div>
+
+      <div class="aviso cuidado">
+        <div class="aviso-titulo">Método "Transferencia" y "Transferencia bancaria"</div>
+        <p>
+          Aquí la opción se llama <em>Transferencia</em> y en el formulario de pago
+          <em>Transferencia bancaria</em>. Es el mismo método: el sistema lo reconoce y
+          lo precarga correctamente.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="facturas">
+      <div class="encabezado-seccion">
+        <div class="numero">06</div>
+        <h2>Consultar las facturas del proveedor</h2>
+      </div>
+
+      <p>
+        Al entrar a la gestión de pagos de un proveedor verá cuatro pestañas:
+        <strong>Facturas</strong>, <strong>Historial de pagos</strong>,
+        <strong>Nuevo pago</strong> y <strong>Notas de crédito</strong>.
+        La primera, <strong>Facturas</strong>, es de consulta: muestra todas las
+        facturas del proveedor, pagadas y por pagar.
+      </p>
+
+      <h4>Columnas de la tabla</h4>
+      <div class="tabla-envoltorio">
+        <table>
+          <thead>
+            <tr>
+              <th>Columna</th>
+              <th>Qué muestra</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Folio / Serie / No. Factura</td><td>Los identificadores del documento.</td></tr>
+            <tr><td>Fecha Recepción</td><td>Cuándo se recibió la mercancía.</td></tr>
+            <tr><td>Fecha Creación</td><td>Cuándo se capturó la factura en el sistema.</td></tr>
+            <tr><td>Ubicación</td><td>La sucursal que recibió.</td></tr>
+            <tr><td>Total</td><td>El importe completo de la factura.</td></tr>
+            <tr><td>Devoluciones</td><td>Importe devuelto al proveedor sobre esa factura.</td></tr>
+            <tr><td>Saldo pendiente</td><td><strong>Lo que realmente falta pagar.</strong> Es la cifra que se usa al pagar.</td></tr>
+            <tr><td>Estado de la recepción</td><td>Si la mercancía llegó completa, parcial o está pendiente.</td></tr>
+            <tr><td>Estado de la factura</td><td><span class="etiqueta et-ok">Pagada</span> o <span class="etiqueta et-alto">Por pagar</span>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Filtrar y ordenar</h3>
+      <ul>
+        <li><strong>Buscar factura:</strong> escriba folio o número de factura; la búsqueda se aplica sola tras un instante.</li>
+        <li><strong>Rango de fechas:</strong> los campos <em>Desde</em> y <em>Hasta</em> vienen con la fecha de hoy. <strong>Ábralos y amplíe el rango</strong> si no ve las facturas que espera.</li>
+        <li><strong>Ordenar:</strong> haga clic en el título de una columna para ordenar; otro clic invierte el orden.</li>
+        <li><strong>Por página:</strong> abajo a la derecha puede mostrar 10, 25, 50, 100 o 300 renglones.</li>
+        <li><strong>Exportar:</strong> los botones de PDF y Excel descargan la tabla con los filtros que tenga puestos.</li>
+      </ul>
+
+      <div class="aviso cuidado">
+        <div class="aviso-titulo">La causa más común de "no aparecen mis facturas"</div>
+        <p>
+          El rango de fechas arranca en el día de hoy. Si la factura se recibió la
+          semana pasada, no saldrá hasta que mueva la fecha <em>Desde</em> hacia atrás.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="registrar">
+      <div class="encabezado-seccion">
+        <div class="numero">07</div>
+        <h2>Registrar un pago</h2>
+      </div>
+
+      <p>
+        Se hace desde la pestaña <strong>Nuevo pago</strong>. Un mismo pago puede
+        cubrir varias facturas a la vez.
+      </p>
+
+      <figure>
+        <div class="barra-ventana">
+          <span class="punto"></span><span class="punto"></span><span class="punto"></span>
+          <span class="titulo-ventana">Pagos a proveedor — Nuevo pago</span>
+        </div>
+        <div class="lienzo">
+          <svg viewBox="0 0 620 400" role="img" aria-label="Pantalla de nuevo pago con la tabla de facturas arriba, el resumen abajo a la izquierda y los datos del pago a la derecha">
+            <rect x="10" y="10" width="600" height="380" rx="7" class="sv-panel" stroke-width="1"/>
+
+            <!-- Pestañas -->
+            <rect x="26" y="24" width="82" height="24" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="67" y="40" text-anchor="middle" class="sv-t-suave">Facturas</text>
+            <rect x="112" y="24" width="106" height="24" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="165" y="40" text-anchor="middle" class="sv-t-suave">Historial</text>
+            <rect x="222" y="24" width="90" height="24" rx="4" class="sv-cabecera"/>
+            <text x="267" y="40" text-anchor="middle" class="sv-t-blanco">Nuevo pago</text>
+            <rect x="316" y="24" width="112" height="24" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="372" y="40" text-anchor="middle" class="sv-t-suave">Notas de crédito</text>
+
+            <!-- Filtros -->
+            <rect x="26" y="62" width="150" height="26" rx="4" class="sv-hueco" stroke-width="1"/>
+            <circle cx="41" cy="75" r="4" class="sv-linea" stroke-width="1.2"/>
+            <line x1="44" y1="78" x2="47" y2="81" class="sv-linea" stroke-width="1.2"/>
+            <text x="54" y="79" class="sv-t-tenue">Buscar factura...</text>
+
+            <rect x="184" y="62" width="98" height="26" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="194" y="79" class="sv-t-tenue">Desde: hoy</text>
+            <rect x="290" y="62" width="98" height="26" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="300" y="79" class="sv-t-tenue">Hasta: hoy</text>
+
+            <rect x="440" y="62" width="112" height="26" rx="13" class="sv-acento" stroke-width="1"/>
+            <text x="496" y="79" text-anchor="middle" class="sv-t-verde">2 seleccionadas</text>
+
+            <!-- Tabla -->
+            <rect x="26" y="100" width="568" height="24" rx="3" class="sv-cabecera"/>
+            <text x="60" y="116" class="sv-t-blanco">Folio</text>
+            <text x="140" y="116" class="sv-t-blanco">No. Factura</text>
+            <text x="250" y="116" class="sv-t-blanco">Fecha Recepción</text>
+            <text x="380" y="116" class="sv-t-blanco">Total</text>
+            <text x="470" y="116" class="sv-t-blanco">Saldo pendiente</text>
+
+            <!-- Fila marcada 1 -->
+            <rect x="26" y="124" width="568" height="26" fill="var(--verde-claro)"/>
+            <rect x="36" y="131" width="12" height="12" rx="2.5" class="sv-cabecera"/>
+            <path d="M39 137 L41.5 139.5 L45.5 134.5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="60" y="141" class="sv-t">F-1042</text>
+            <text x="140" y="141" class="sv-t">A-8891</text>
+            <text x="250" y="141" class="sv-t">28-07-2026</text>
+            <text x="380" y="141" class="sv-t">$6,000.00</text>
+            <text x="470" y="141" class="sv-t" font-weight="600">$6,000.00</text>
+
+            <!-- Fila marcada 2 -->
+            <rect x="26" y="150" width="568" height="26" fill="var(--verde-claro)"/>
+            <rect x="36" y="157" width="12" height="12" rx="2.5" class="sv-cabecera"/>
+            <path d="M39 163 L41.5 165.5 L45.5 160.5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="60" y="167" class="sv-t">F-1043</text>
+            <text x="140" y="167" class="sv-t">A-8892</text>
+            <text x="250" y="167" class="sv-t">29-07-2026</text>
+            <text x="380" y="167" class="sv-t">$4,000.00</text>
+            <text x="470" y="167" class="sv-t" font-weight="600">$4,000.00</text>
+
+            <!-- Fila sin marcar -->
+            <rect x="36" y="183" width="12" height="12" rx="2.5" fill="none" stroke="var(--texto-tenue)" stroke-width="1.2"/>
+            <text x="60" y="193" class="sv-t-suave">F-1044</text>
+            <text x="140" y="193" class="sv-t-suave">A-8893</text>
+            <text x="250" y="193" class="sv-t-suave">30-07-2026</text>
+            <text x="380" y="193" class="sv-t-suave">$2,500.00</text>
+            <text x="470" y="193" class="sv-t-suave">$2,500.00</text>
+            <line x1="26" y1="202" x2="594" y2="202" class="sv-linea" stroke-width="1"/>
+
+            <!-- Botón NC -->
+            <rect x="26" y="214" width="182" height="26" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="42" y="231" class="sv-t">Aplicar notas de crédito</text>
+            <circle cx="190" cy="227" r="9" class="sv-acento" stroke-width="1"/>
+            <text x="190" y="230.5" text-anchor="middle" class="sv-t-verde" font-size="9">3</text>
+
+            <!-- Resumen -->
+            <rect x="26" y="252" width="268" height="126" rx="6" class="sv-hueco" stroke-width="1"/>
+            <text x="40" y="270" class="sv-t-suave" font-weight="600">Resumen de pago — 2 facturas</text>
+            <text x="40" y="290" class="sv-t-suave">Subtotal facturas</text>
+            <text x="280" y="290" text-anchor="end" class="sv-t">$8,620.69</text>
+            <text x="40" y="308" class="sv-t-suave">IVA (16%)</text>
+            <text x="280" y="308" text-anchor="end" class="sv-t">$1,379.31</text>
+            <line x1="40" y1="317" x2="280" y2="317" class="sv-linea" stroke-width="1"/>
+            <text x="40" y="333" class="sv-t" font-weight="700">Total facturas</text>
+            <text x="280" y="333" text-anchor="end" class="sv-t-verde" font-size="12">$10,000.00</text>
+            <rect x="36" y="342" width="248" height="28" rx="4" class="sv-acento" stroke-width="1"/>
+            <text x="46" y="360" class="sv-t-verde" font-size="10.5">Total final a pagar</text>
+            <text x="274" y="360" text-anchor="end" class="sv-t-verde" font-size="12">$7,600.00</text>
+
+            <!-- Datos del pago -->
+            <text x="312" y="266" class="sv-t" font-weight="700">Datos del pago</text>
+            <rect x="312" y="274" width="282" height="26" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="322" y="291" class="sv-t-suave">Método de pago: Transferencia bancaria</text>
+            <rect x="312" y="304" width="282" height="26" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="322" y="321" class="sv-t-suave">Tipo de pago: Crédito</text>
+            <rect x="312" y="334" width="282" height="26" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="322" y="351" class="sv-t-suave">Descuento: Pronto pago (5%) — principal</text>
+            <rect x="312" y="364" width="136" height="26" rx="4" class="sv-cabecera"/>
+            <text x="380" y="381" text-anchor="middle" class="sv-t-blanco">Registrar pago</text>
+            <rect x="456" y="364" width="80" height="26" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="496" y="381" text-anchor="middle" class="sv-t-suave">Limpiar</text>
+
+            <!-- Globos -->
+            <circle cx="336" cy="60" r="9" class="sv-globo"/>
+            <text x="336" y="63.5" text-anchor="middle" class="sv-globo-t">1</text>
+            <circle cx="16" cy="137" r="9" class="sv-globo"/>
+            <text x="16" y="140.5" text-anchor="middle" class="sv-globo-t">2</text>
+            <circle cx="222" cy="212" r="9" class="sv-globo"/>
+            <text x="222" y="215.5" text-anchor="middle" class="sv-globo-t">3</text>
+            <circle cx="604" cy="287" r="9" class="sv-globo"/>
+            <text x="604" y="290.5" text-anchor="middle" class="sv-globo-t">4</text>
+            <circle cx="16" cy="356" r="9" class="sv-globo"/>
+            <text x="16" y="359.5" text-anchor="middle" class="sv-globo-t">5</text>
+          </svg>
+        </div>
+        <figcaption>
+          <b>Pestaña Nuevo pago</b>
+          Con dos facturas marcadas por $10,000, una nota de crédito de $2,000 y un
+          descuento del 5 %, el total final queda en $7,600.
+        </figcaption>
+      </figure>
+
+      <ol class="leyenda">
+        <li>
+          <b>Rango de fechas <span class="donde">arranca en hoy</span></b>
+          <span class="que">Amplíelo si no ve las facturas que espera.</span>
+        </li>
+        <li>
+          <b>Casillas de selección</b>
+          <span class="que">Marcan las facturas a pagar. Se conservan al cambiar de página.</span>
+        </li>
+        <li>
+          <b>Aplicar notas de crédito</b>
+          <span class="que">El número indica cuántas notas hay disponibles.</span>
+        </li>
+        <li>
+          <b>Datos del pago</b>
+          <span class="que">Método y tipo son obligatorios. Vienen precargados del proveedor.</span>
+        </li>
+        <li>
+          <b>Total final a pagar</b>
+          <span class="que">La cifra que realmente sale de caja. Verifíquela antes de registrar.</span>
+        </li>
+      </ol>
+
+      <ol class="pasos">
+        <li>
+          <div>
+            <strong>Encuentre las facturas por pagar.</strong>
+            <p>
+              La tabla de esta pestaña muestra únicamente facturas que todavía tienen
+              saldo. Use el buscador y, sobre todo, <strong>amplíe el rango de fechas</strong>,
+              que también arranca en el día de hoy.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Marque las facturas con la casilla de la izquierda.</strong>
+            <p>
+              Arriba de la tabla aparece una etiqueta verde con la cuenta de facturas
+              seleccionadas, y a la izquierda se arma el resumen del pago.
+            </p>
+            <ul class="detalle">
+              <li>La selección <strong>se conserva al cambiar de página</strong>: puede marcar dos facturas en la página 1, pasar a la 2 y marcar otra; las tres quedan incluidas.</li>
+              <li>La casilla del encabezado marca todas las de la página actual.</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Aplique notas de crédito si las hay.</strong>
+            <p>
+              El botón <em>Aplicar notas de crédito</em> aparece solo cuando el proveedor
+              tiene notas disponibles, y se habilita cuando ya seleccionó al menos una
+              factura. El detalle está en la <a href="#notas">sección 9</a>.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Complete los datos del pago, a la derecha.</strong>
+            <ul class="detalle">
+              <li><strong>Método de pago</strong> (obligatorio): Efectivo, Transferencia bancaria, Cheque o Tarjeta.</li>
+              <li><strong>Tipo de pago</strong> (obligatorio): Contado o Crédito.</li>
+              <li><strong>Descuento</strong> (opcional): ver abajo.</li>
+              <li><strong>Referencia</strong> (opcional): número de transferencia, folio del cheque, etc.</li>
+              <li><strong>Notas</strong> (opcional): cualquier observación.</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Verifique el resumen de la izquierda.</strong>
+            <p>
+              Muestra subtotal, IVA, notas de crédito, descuento y el
+              <strong>Total final a pagar</strong>. Confirme que ese número es el que
+              va a salir de caja o del banco.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Presione <em>Registrar pago</em>.</strong>
+            <p>
+              El sistema confirma con un mensaje verde, limpia el formulario y lo lleva
+              al <strong>Historial de pagos</strong>, donde el pago nuevo aparece como
+              <span class="etiqueta et-espera">Pendiente</span>.
+            </p>
+          </div>
+        </li>
+      </ol>
+
+      <h3>Datos que se llenan solos</h3>
+      <p>
+        Si el proveedor tiene datos bancarios capturados, el <strong>método de pago</strong>,
+        el <strong>tipo</strong> y la <strong>referencia</strong> vienen precargados —
+        verá la etiqueta <em>"Precargado del proveedor — puedes cambiarlo"</em>.
+        Son solo una sugerencia: puede sobrescribirlos.
+      </p>
+      <p>
+        Lo mismo con el <strong>descuento</strong>: si el proveedor tiene un descuento
+        marcado como principal, queda seleccionado por omisión.
+      </p>
+
+      <h3>El selector de descuento</h3>
+      <ul>
+        <li><strong>Sin descuento</strong> — no se aplica ninguno.</li>
+        <li><strong>Los descuentos del proveedor</strong> — aparecen con su nombre y porcentaje; el principal viene marcado como tal.</li>
+        <li><strong>Otro (porcentaje personalizado)</strong> — abre un campo para escribir el porcentaje a mano. Debe estar entre 0 y 100.</li>
+      </ul>
+
+      <h3>Si el botón <em>Registrar pago</em> está apagado</h3>
+      <div class="tabla-envoltorio">
+        <table>
+          <thead>
+            <tr><th>Motivo</th><th>Solución</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>No hay facturas seleccionadas</td><td>Marque al menos una casilla.</td></tr>
+            <tr><td>Las notas de crédito superan el total</td><td>Quite alguna nota o reduzca los montos asignados.</td></tr>
+            <tr><td>El porcentaje personalizado es inválido</td><td>Escriba un número entre 0 y 100.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Si presiona <em>Registrar pago</em> y falta el método o el tipo de pago, esos
+        campos se marcan en rojo con el mensaje correspondiente.
+      </p>
+
+      <p>
+        El botón <strong>Limpiar</strong> descarta todo lo capturado y regresa el
+        formulario a sus valores precargados.
+      </p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="calculo">
+      <div class="encabezado-seccion">
+        <div class="numero">08</div>
+        <h2>Cómo se calcula el total</h2>
+      </div>
+
+      <p>
+        Vale la pena entender el orden de las operaciones, porque
+        <strong>el descuento se aplica después de restar las notas de crédito</strong>,
+        no antes.
+      </p>
+
+      <div class="formula">
+        <ol>
+          <li><span>Suma del saldo pendiente de las facturas marcadas</span><span class="op">= Total facturas</span></li>
+          <li><span class="op">− Notas de crédito aplicadas</span><span class="op">= Neto</span></li>
+          <li><span class="op">− Descuento (% sobre el Neto)</span><span class="op">&nbsp;</span></li>
+          <li class="total"><span>Total final a pagar</span><span>&nbsp;</span></li>
+        </ol>
+      </div>
+
+      <p>
+        El subtotal y el IVA que se guardan en el pago se desglosan a partir del
+        <strong>total final</strong>, no del total original de las facturas: el sistema
+        divide el total final entre 1.16 para obtener el subtotal, y la diferencia es
+        el IVA (16 %).
+      </p>
+
+      <h4>Ejemplo</h4>
+      <div class="tabla-envoltorio">
+        <table>
+          <thead>
+            <tr><th>Concepto</th><th>Importe</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Total de las facturas marcadas</td><td>$10,000.00</td></tr>
+            <tr><td>Nota de crédito aplicada</td><td>− $2,000.00</td></tr>
+            <tr><td>Neto</td><td>$8,000.00</td></tr>
+            <tr><td>Descuento del 5 % sobre el neto</td><td>− $400.00</td></tr>
+            <tr><td><strong>Total final a pagar</strong></td><td><strong>$7,600.00</strong></td></tr>
+            <tr><td>Subtotal registrado</td><td>$6,551.72</td></tr>
+            <tr><td>IVA registrado</td><td>$1,048.28</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="aviso">
+        <div class="aviso-titulo">En el resumen</div>
+        <p>
+          Las líneas de <em>Subtotal final</em>, <em>IVA final</em> y
+          <em>Total final a pagar</em> solo se muestran cuando hay notas de crédito o
+          descuento. Si no hay ninguno de los dos, el total de las facturas ya es el
+          total del pago.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="notas">
+      <div class="encabezado-seccion">
+        <div class="numero">09</div>
+        <h2>Notas de crédito</h2>
+      </div>
+
+      <p>
+        Una nota de crédito es saldo a favor con el proveedor. Se descuenta del pago
+        en lugar de dinero. Pueden originarse de dos maneras:
+      </p>
+      <ul>
+        <li><strong>Devolución</strong> — el sistema la genera solo cuando se devuelve mercancía.</li>
+        <li><strong>Manual</strong> — se captura a mano desde la pestaña <em>Notas de crédito</em>.</li>
+      </ul>
+
+      <h3>La pestaña Notas de crédito</h3>
+      <p>Lista las notas del proveedor con su folio, fecha, total, saldo, estado y origen.</p>
+
+      <div class="tabla-envoltorio">
+        <table>
+          <thead>
+            <tr><th>Estado</th><th>Significado</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="etiqueta et-ok">Disponible</span></td><td>No se ha usado; su saldo completo puede aplicarse.</td></tr>
+            <tr><td><span class="etiqueta et-espera">Parcial</span></td><td>Se usó una parte; queda saldo aprovechable.</td></tr>
+            <tr><td><span class="etiqueta et-alto">Aplicada</span></td><td>Se agotó. Ya no se puede usar ni eliminar.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Crear una nota de crédito manual</h3>
+      <ol class="pasos">
+        <li><div><strong>Presione <em>Nueva nota de crédito</em></strong> en la esquina superior derecha de la pestaña.</div></li>
+        <li>
+          <div>
+            <strong>Capture los datos.</strong>
+            <p>
+              Folio y serie son opcionales. La fecha viene con el día de hoy.
+              Subtotal, IVA y total son obligatorios y deben ser mayores que cero.
+            </p>
+            <ul class="detalle">
+              <li>Si escribe primero el <strong>Total</strong>, el subtotal y el IVA se calculan solos al 16 %.</li>
+              <li>Puede corregirlos a mano si la nota trae otro desglose.</li>
+            </ul>
+          </div>
+        </li>
+        <li><div><strong>Guarde.</strong> La nota queda <span class="etiqueta et-ok">Disponible</span> y lista para aplicarse en el siguiente pago.</div></li>
+      </ol>
+
+      <p>
+        Para eliminar una nota, use el botón rojo de bote de basura. El sistema pide
+        confirmación. <strong>Una nota ya aplicada no se puede eliminar.</strong>
+      </p>
+
+      <h3>Aplicar notas de crédito a un pago</h3>
+      <p>
+        Desde la pestaña <em>Nuevo pago</em>, con facturas ya seleccionadas, presione
+        <em>Aplicar notas de crédito</em>. Se abre un asistente de dos pasos.
+      </p>
+
+      <figure>
+        <div class="barra-ventana">
+          <span class="punto"></span><span class="punto"></span><span class="punto"></span>
+          <span class="titulo-ventana">Aplicar notas de crédito — paso 2 de 2</span>
+        </div>
+        <div class="lienzo">
+          <svg viewBox="0 0 620 296" role="img" aria-label="Asistente de notas de crédito en el paso de asignación a facturas">
+            <rect x="10" y="10" width="600" height="276" rx="7" class="sv-panel" stroke-width="1"/>
+            <text x="30" y="34" class="sv-t-titulo">Aplicar notas de crédito</text>
+
+            <!-- Indicador de pasos -->
+            <rect x="30" y="44" width="124" height="22" rx="11" class="sv-hueco" stroke-width="1"/>
+            <circle cx="45" cy="55" r="7" fill="var(--texto-tenue)"/>
+            <text x="45" y="58.5" text-anchor="middle" class="sv-globo-t">1</text>
+            <text x="58" y="59" class="sv-t-suave">Seleccionar NCs</text>
+
+            <path d="M162 55 h10" class="sv-linea" stroke="var(--texto-tenue)" stroke-width="1.3"/>
+            <path d="M169 51 l4 4 l-4 4" class="sv-linea" stroke="var(--texto-tenue)" stroke-width="1.3" stroke-linecap="round"/>
+
+            <rect x="180" y="44" width="136" height="22" rx="11" class="sv-cabecera"/>
+            <circle cx="195" cy="55" r="7" fill="#fff"/>
+            <text x="195" y="58.5" text-anchor="middle" class="sv-globo-t" fill="var(--verde)">2</text>
+            <text x="208" y="59" class="sv-t-blanco">Asignar a facturas</text>
+
+            <rect x="486" y="44" width="104" height="22" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="538" y="59" text-anchor="middle" class="sv-t-verde" font-size="10">Auto-asignar</text>
+
+            <!-- Bloque de la nota -->
+            <rect x="30" y="80" width="560" height="112" rx="6" class="sv-panel" stroke-width="1"/>
+            <rect x="30" y="80" width="560" height="28" rx="6" fill="var(--verde-claro)"/>
+            <rect x="30" y="100" width="560" height="8" fill="var(--verde-claro)"/>
+            <text x="46" y="99" class="sv-t-verde">NC-0087</text>
+            <text x="110" y="99" class="sv-t-tenue">15-07-2026</text>
+            <text x="420" y="99" class="sv-t-tenue">Saldo restante:</text>
+            <text x="508" y="99" class="sv-t-verde">$0.00</text>
+            <text x="530" y="99" class="sv-t-tenue">/ $2,000.00</text>
+            <line x1="30" y1="108" x2="590" y2="108" class="sv-linea" stroke-width="1"/>
+
+            <!-- Renglón de asignación 1 -->
+            <rect x="44" y="118" width="252" height="32" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="54" y="131" class="sv-t-tenue">Factura</text>
+            <text x="54" y="145" class="sv-t">F-1042</text>
+            <text x="286" y="145" text-anchor="end" class="sv-t-tenue">$6,000.00 pend.</text>
+
+            <rect x="304" y="118" width="106" height="32" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="314" y="131" class="sv-t-tenue">Monto</text>
+            <text x="314" y="145" class="sv-t">$ 1,200.00</text>
+
+            <rect x="418" y="118" width="32" height="32" rx="4" class="sv-hueco" stroke-width="1"/>
+            <path d="M428 142 v-6 M428 136 l6 -6 M428 136 l-6 -6" class="sv-linea" stroke-width="1.3" stroke-linecap="round"/>
+
+            <rect x="456" y="118" width="32" height="32" rx="4" class="sv-hueco" stroke-width="1"/>
+            <path d="M466 128 l12 12 M478 128 l-12 12" stroke="var(--rojo)" stroke-width="1.4" stroke-linecap="round"/>
+
+            <!-- Renglón de asignación 2 -->
+            <rect x="44" y="156" width="252" height="32" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="54" y="169" class="sv-t-tenue">Factura</text>
+            <text x="54" y="183" class="sv-t">F-1043</text>
+            <text x="286" y="183" text-anchor="end" class="sv-t-tenue">$4,000.00 pend.</text>
+
+            <rect x="304" y="156" width="106" height="32" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="314" y="169" class="sv-t-tenue">Monto</text>
+            <text x="314" y="183" class="sv-t">$ 800.00</text>
+
+            <rect x="418" y="156" width="32" height="32" rx="4" class="sv-hueco" stroke-width="1"/>
+            <path d="M428 180 v-6 M428 174 l6 -6 M428 174 l-6 -6" class="sv-linea" stroke-width="1.3" stroke-linecap="round"/>
+
+            <rect x="456" y="156" width="32" height="32" rx="4" class="sv-hueco" stroke-width="1"/>
+            <path d="M466 166 l12 12 M478 166 l-12 12" stroke="var(--rojo)" stroke-width="1.4" stroke-linecap="round"/>
+
+            <!-- Total -->
+            <line x1="30" y1="206" x2="590" y2="206" class="sv-linea" stroke-width="1"/>
+            <text x="40" y="222" class="sv-t-suave">Total aplicado</text>
+            <text x="580" y="222" text-anchor="end" class="sv-t-verde" font-size="12">$2,000.00</text>
+
+            <!-- Pie -->
+            <line x1="10" y1="238" x2="610" y2="238" class="sv-linea" stroke-width="1"/>
+            <text x="30" y="266" class="sv-t-suave">Total final a pagar: $8,000.00</text>
+            <rect x="378" y="250" width="70" height="28" rx="4" class="sv-hueco" stroke-width="1"/>
+            <text x="413" y="268" text-anchor="middle" class="sv-t-suave">Atrás</text>
+            <rect x="456" y="250" width="154" height="28" rx="4" class="sv-cabecera"/>
+            <text x="533" y="268" text-anchor="middle" class="sv-t-blanco">Confirmar 2 asignaciones</text>
+
+            <!-- Globos -->
+            <circle cx="604" cy="55" r="9" class="sv-globo"/>
+            <text x="604" y="58.5" text-anchor="middle" class="sv-globo-t">1</text>
+            <circle cx="604" cy="94" r="9" class="sv-globo"/>
+            <text x="604" y="97.5" text-anchor="middle" class="sv-globo-t">2</text>
+            <circle cx="20" cy="134" r="9" class="sv-globo"/>
+            <text x="20" y="137.5" text-anchor="middle" class="sv-globo-t">3</text>
+            <circle cx="434" cy="106" r="9" class="sv-globo"/>
+            <text x="434" y="109.5" text-anchor="middle" class="sv-globo-t">4</text>
+            <circle cx="472" cy="106" r="9" class="sv-globo"/>
+            <text x="472" y="109.5" text-anchor="middle" class="sv-globo-t">5</text>
+          </svg>
+        </div>
+        <figcaption>
+          <b>Asistente de notas de crédito</b>
+          Una nota de $2,000 repartida entre dos facturas: $1,200 a la F-1042 y $800 a
+          la F-1043. El saldo restante de la nota llegó a cero.
+        </figcaption>
+      </figure>
+
+      <ol class="leyenda">
+        <li>
+          <b>Auto-asignar</b>
+          <span class="que">Reparte las notas entre las facturas automáticamente.</span>
+        </li>
+        <li>
+          <b>Saldo restante</b>
+          <span class="que">Cuánto le queda a la nota conforme reparte. Llega a $0.00 cuando se agotó.</span>
+        </li>
+        <li>
+          <b>Renglón de asignación</b>
+          <span class="que">Una factura y el monto que se le aplica de esta nota.</span>
+        </li>
+        <li>
+          <b>Bifurcar</b>
+          <span class="que">Agrega otro renglón para repartir la nota entre más facturas.</span>
+        </li>
+        <li>
+          <b>Quitar</b>
+          <span class="que">Elimina ese renglón.</span>
+        </li>
+      </ol>
+
+      <ol class="pasos">
+        <li>
+          <div>
+            <strong>Paso 1 — Seleccionar notas.</strong>
+            <p>
+              Aparecen las notas con saldo disponible. Márquelas con su casilla; puede
+              buscar por folio. Presione <em>Siguiente</em>.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Paso 2 — Asignar a facturas.</strong>
+            <p>
+              Cada nota necesita saber a qué factura se aplica y por cuánto. El sistema
+              propone el saldo completo de la nota; usted elige la factura y ajusta el
+              monto si hace falta.
+            </p>
+            <ul class="detalle">
+              <li><strong>Auto-asignar</strong> reparte automáticamente las notas entre las facturas seleccionadas, en orden, hasta agotarlas.</li>
+              <li>El botón de <strong>bifurcación</strong> divide una nota entre dos o más facturas: agrega otro renglón con el saldo que le queda.</li>
+              <li>El botón de <strong>tache</strong> elimina un renglón de asignación.</li>
+              <li>La cabecera de cada nota muestra su <em>saldo restante</em> conforme reparte.</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Confirme.</strong>
+            <p>
+              El botón indica cuántas asignaciones se van a guardar. Al confirmar, las
+              notas quedan listadas bajo la tabla y el resumen del pago las descuenta.
+            </p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="aviso cuidado">
+        <div class="aviso-titulo">Límites que el sistema no deja rebasar</div>
+        <p>
+          Un monto no puede exceder el saldo de la nota ni el saldo pendiente de la
+          factura. Si lo intenta, el campo se marca en rojo indicando el máximo
+          permitido, y no podrá confirmar hasta corregirlo.
+        </p>
+      </div>
+
+      <p>
+        Ya de regreso en el formulario, cada asignación aparece como
+        <code>folio de la nota → factura</code> con su importe. Puede quitarlas una por
+        una con el tache, o todas de golpe con <em>Quitar todas</em>.
+      </p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="historial">
+      <div class="encabezado-seccion">
+        <div class="numero">10</div>
+        <h2>Historial y seguimiento</h2>
+      </div>
+
+      <p>
+        La pestaña <strong>Historial de pagos</strong> concentra todos los pagos hechos
+        a ese proveedor. Además del buscador y el rango de fechas, tiene un filtro por
+        <strong>Estado</strong> para aislar los pendientes.
+      </p>
+
+      <h3>Acciones sobre cada pago</h3>
+      <div class="fichas">
+        <div class="ficha">
+          <div class="ficha-nombre">Marcar como pagado</div>
+          <p>Confirma que el dinero salió. Pide confirmación y guarda quién y cuándo. Solo en pagos pendientes.</p>
+        </div>
+        <div class="ficha">
+          <div class="ficha-nombre">Cancelar pago</div>
+          <p>Anula el pago. <strong>Pide PIN.</strong> Solo en pagos pendientes.</p>
+        </div>
+        <div class="ficha">
+          <div class="ficha-nombre">Ver detalles</div>
+          <p>Abre el desglose completo: facturas, notas de crédito y resumen financiero.</p>
+        </div>
+        <div class="ficha">
+          <div class="ficha-nombre">Descargar PDF</div>
+          <p>Genera el comprobante del pago y lo abre en una pestaña nueva.</p>
+        </div>
+        <div class="ficha">
+          <div class="ficha-nombre">Editar referencia / notas</div>
+          <p>Corrige la referencia y las observaciones. Disponible en cualquier estado.</p>
+        </div>
+        <div class="ficha">
+          <div class="ficha-nombre">Eliminar pago</div>
+          <p>Borra el registro. <strong>Pide PIN.</strong></p>
+        </div>
+      </div>
+
+      <div class="aviso alto">
+        <div class="aviso-titulo">Cancelar y eliminar no son lo mismo</div>
+        <p>
+          <strong>Cancelar</strong> deja el registro visible marcado como cancelado:
+          queda la huella de que ese pago existió y se anuló.
+          <strong>Eliminar</strong> borra el registro. Para auditoría, casi siempre
+          conviene cancelar.
+        </p>
+      </div>
+
+      <div class="aviso cuidado">
+        <div class="aviso-titulo">La referencia se puede escribir una sola vez</div>
+        <p>
+          Al editar un pago, si la referencia ya tenía valor el campo aparece con un
+          candado y no se puede modificar. Las notas sí se pueden cambiar siempre.
+          Escriba la referencia con cuidado desde el principio.
+        </p>
+      </div>
+
+      <h3>El detalle del pago</h3>
+      <p>Al abrir <em>Ver detalles</em> encontrará, de arriba abajo:</p>
+      <ul>
+        <li><strong>Datos generales:</strong> folio, estado (con fecha y usuario que confirmó), tipo, método, referencia, fechas y notas.</li>
+        <li><strong>Facturas pagadas:</strong> qué facturas cubrió este pago.</li>
+        <li><strong>Notas de crédito aplicadas:</strong> las que se descontaron, con el monto usado de cada una.</li>
+        <li><strong>Notas de crédito generadas:</strong> ver el aviso siguiente.</li>
+        <li><strong>Resumen financiero:</strong> total de facturas, descuentos, subtotal, IVA y total del pago.</li>
+      </ul>
+
+      <div class="aviso">
+        <div class="aviso-titulo">Notas de crédito generadas después del pago</div>
+        <p>
+          Si se devolvió mercancía <em>después</em> de haber pagado la factura, la nota
+          resultante aparece en su propia sección.
+          <strong>No reduce el total ya pagado</strong>: queda como saldo a favor para
+          aplicarlo en una compra posterior.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="global">
+      <div class="encabezado-seccion">
+        <div class="numero">11</div>
+        <h2>Vista de todos los pagos</h2>
+      </div>
+
+      <div class="ruta">
+        <span>Menú lateral</span><span aria-hidden>›</span>
+        <span>Proveedores</span><span aria-hidden>›</span>
+        <span>Pagos</span>
+      </div>
+
+      <p>
+        Misma información que el historial, pero de <strong>todos los proveedores a la
+        vez</strong>. Sirve para revisar qué está pendiente en general, sin entrar
+        proveedor por proveedor.
+      </p>
+
+      <h4>Filtros disponibles</h4>
+      <div class="tabla-envoltorio">
+        <table>
+          <thead>
+            <tr><th>Filtro</th><th>Busca por</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Buscar</td><td>Folio, referencia o notas del pago.</td></tr>
+            <tr><td>Proveedor</td><td>Un proveedor en particular.</td></tr>
+            <tr><td>Método de pago</td><td>Efectivo, transferencia, cheque o tarjeta.</td></tr>
+            <tr><td>Tipo de pago</td><td>Contado o crédito.</td></tr>
+            <tr><td>Estado</td><td>Pendiente, pagado o cancelado.</td></tr>
+            <tr><td>Desde / Hasta</td><td>Rango de fechas. Arranca en el día de hoy.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        Cuando hay algún filtro activo aparece el botón rojo <strong>Limpiar</strong>,
+        que los reinicia todos. Los botones de exportación descargan el listado
+        respetando los filtros puestos.
+      </p>
+
+      <p>
+        Las acciones por renglón son las mismas del historial, con una diferencia:
+        <strong>en esta pantalla no se puede eliminar un pago</strong>, solo cancelarlo.
+        Para eliminarlo hay que entrar al historial del proveedor.
+      </p>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="pronostico">
+      <div class="encabezado-seccion">
+        <div class="numero">12</div>
+        <h2>Pronóstico de pagos</h2>
+      </div>
+
+      <div class="ruta">
+        <span>Menú lateral</span><span aria-hidden>›</span>
+        <span>Proveedores</span><span aria-hidden>›</span>
+        <span>Pronóstico de pagos</span>
+      </div>
+
+      <p>
+        Responde a la pregunta <em>"¿cuánto tenemos que pagarle a proveedores en este
+        periodo?"</em>. No es una pantalla de consulta: es un generador de reportes.
+      </p>
+
+      <ol class="pasos">
+        <li><div><strong>Elija el rango</strong> en <em>Desde</em> y <em>Hasta</em>.</div></li>
+        <li>
+          <div>
+            <strong>Genere el reporte.</strong>
+            <ul class="detalle">
+              <li><strong>Exportar PDF</strong> abre el reporte en una ventana nueva y manda el documento a impresión.</li>
+              <li><strong>Exportar Excel</strong> descarga el archivo a su computadora.</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+
+      <div class="aviso cuidado">
+        <div class="aviso-titulo">Si no se abre nada</div>
+        <p>
+          El PDF se abre en una ventana emergente. Si el navegador la bloquea verá un
+          aviso; permita las ventanas emergentes para este sitio y vuelva a intentar.
+          Lo mismo aplica al descargar el PDF de un pago desde el historial.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <section id="dudas">
+      <div class="encabezado-seccion">
+        <div class="numero">13</div>
+        <h2>Preguntas frecuentes</h2>
+      </div>
+
+      <h3>No encuentro una factura que sé que existe</h3>
+      <p>
+        Casi siempre es el rango de fechas, que arranca en hoy. Amplíe la fecha
+        <em>Desde</em>. Si aun así no aparece en <em>Nuevo pago</em>, revise en la
+        pestaña <em>Facturas</em>: puede que ya esté pagada, y esa pestaña solo lista
+        facturas con saldo.
+      </p>
+
+      <h3>¿Puedo pagar varias facturas en un solo pago?</h3>
+      <p>
+        Sí, y es lo normal. Marque todas las que va a cubrir; la selección se conserva
+        aunque cambie de página.
+      </p>
+
+      <h3>¿Puedo pagar una factura a medias?</h3>
+      <p>
+        El formulario toma el saldo pendiente completo de cada factura marcada. Para
+        cubrir solo una parte, use una nota de crédito por la diferencia o consulte con
+        administración cómo se maneja ese caso.
+      </p>
+
+      <h3>Me equivoqué en la referencia de un pago ya registrado</h3>
+      <p>
+        Si la referencia ya tenía valor, no se puede corregir: el campo queda bloqueado.
+        Escriba la aclaración en las <strong>notas</strong>, que sí se pueden editar
+        siempre.
+      </p>
+
+      <h3>Registré un pago que no debía</h3>
+      <p>
+        Si sigue <span class="etiqueta et-espera">Pendiente</span>, cancélelo — necesita
+        el PIN. Las facturas vuelven a quedar por pagar. Si ya está
+        <span class="etiqueta et-ok">Pagado</span>, no se puede cancelar desde la pantalla;
+        consulte con administración.
+      </p>
+
+      <h3>¿Cómo agrego descuentos individuales por factura?</h3>
+      <p> Para aplicar un descuento a una factura específica, primero debes crear una <strong>Nota de Crédito</strong> y
+        posteriormente aplicarla a la factura correspondiente. De esta manera, el descuento afectará únicamente a esa factura.
+      </p>
+
+      <h3>¿Por qué el descuento sale menor de lo que esperaba?</h3>
+      <p>
+        Porque se calcula sobre el neto, ya restadas las notas de crédito. Un 5 % sobre
+        $8,000 son $400, aunque las facturas sumaran $10,000. Vea la
+        <a href="#calculo">sección 8</a>.
+      </p>
+
+      <h3>El botón de talonario no aparece en la lista de proveedores</h3>
+      <p>
+        Le falta el permiso <code>supplier_payments.manage</code>. Solicítelo a un
+        administrador.
+      </p>
+
+      <h3>Apliqué una nota de crédito pero no puedo eliminarla</h3>
+      <p>
+        Las notas ya aplicadas quedan bloqueadas para conservar la consistencia con el
+        pago que las usó. Si la aplicación fue un error, cancele el pago
+        correspondiente.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    Manual de usuario · Pagos a proveedores · Refaccionaria Victorino · Actualizado 05-08-2026
+  </footer>
+
+</div>
+
+</body>
+</html>

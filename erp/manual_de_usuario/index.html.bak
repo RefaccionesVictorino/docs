@@ -739,7 +739,7 @@
 <div class="cascaron">
 
   <header class="portada">
-    <div class="marca">Refaccionaria Victorino · Manual de usuario</div>
+    <div class="marca">Refacciones Victorino · Manual de usuario</div>
     <h1>Pagos a proveedores</h1>
     <p class="bajada">
       Cómo consultar las facturas que se le deben a un proveedor, registrar el pago
@@ -749,7 +749,7 @@
     <div class="meta-portada">
       <span><b>Módulo:</b> Proveedores › Pagos</span>
       <span><b>Permiso requerido:</b> supplier_payments.manage</span>
-      <span><b>Versión:</b> 10-08-2026</span>
+      <span><b>Versión:</b> 05-08-2026</span>
     </div>
   </header>
 
@@ -990,14 +990,8 @@
       <p>
         Un proveedor puede tener varios descuentos negociados — por pronto pago, por
         volumen, por temporada. Aquí se capturan todos, y se marca cuál es el
-        <strong>principal</strong>: ese será el que se proponga por omisión como
-        <strong>descuento global</strong> al registrar un pago.
-      </p>
-
-      <p>
-        Estos descuentos alimentan el selector de descuento global. El descuento que se
-        captura por factura, en cambio, se escribe a mano en cada renglón y no toma nada
-        de esta lista.
+        <strong>principal</strong>: ese será el que se aplique por omisión al registrar
+        un pago.
       </p>
 
       <figure>
@@ -1158,15 +1152,10 @@
       <div class="aviso">
         <div class="aviso-titulo">Cómo se usan al pagar</div>
         <p>
-          En <em>Nuevo pago</em>, el selector de <strong>Descuento global</strong> lista
-          estos descuentos con su nombre y porcentaje, y el principal aparece marcado
-          como tal y preseleccionado. También puede escribir un porcentaje distinto con
-          la opción <em>Otro</em> sin tener que darlo de alta aquí.
-        </p>
-        <p>
-          El nombre del descuento elegido queda guardado con el pago, así que en el
-          detalle y en el PDF se ve si aquel 5 % fue <em>Pronto pago</em> o un valor
-          capturado a mano.
+          En <em>Nuevo pago</em>, el selector de <strong>Descuento</strong> lista estos
+          descuentos con su nombre y porcentaje, y el principal aparece marcado como tal
+          y preseleccionado. También puede escribir un porcentaje distinto con la opción
+          <em>Otro</em> sin tener que darlo de alta aquí.
         </p>
       </div>
     </section>
@@ -1429,44 +1418,38 @@
             <!-- Tabla -->
             <rect x="26" y="100" width="568" height="24" rx="3" class="sv-cabecera"/>
             <text x="60" y="116" class="sv-t-blanco">Folio</text>
-            <text x="130" y="116" class="sv-t-blanco">No. Factura</text>
-            <text x="222" y="116" class="sv-t-blanco">Fecha Rec.</text>
-            <text x="318" y="116" class="sv-t-blanco">Saldo pend.</text>
-            <text x="410" y="116" class="sv-t-blanco">Descuento %</text>
-            <text x="512" y="116" class="sv-t-blanco">Neto</text>
+            <text x="140" y="116" class="sv-t-blanco">No. Factura</text>
+            <text x="250" y="116" class="sv-t-blanco">Fecha Recepción</text>
+            <text x="380" y="116" class="sv-t-blanco">Total</text>
+            <text x="470" y="116" class="sv-t-blanco">Saldo pendiente</text>
 
             <!-- Fila marcada 1 -->
             <rect x="26" y="124" width="568" height="26" fill="var(--verde-claro)"/>
             <rect x="36" y="131" width="12" height="12" rx="2.5" class="sv-cabecera"/>
             <path d="M39 137 L41.5 139.5 L45.5 134.5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             <text x="60" y="141" class="sv-t">F-1042</text>
-            <text x="130" y="141" class="sv-t">A-8891</text>
-            <text x="222" y="141" class="sv-t">28-07-2026</text>
-            <text x="318" y="141" class="sv-t">$6,000.00</text>
-            <rect x="410" y="130" width="52" height="18" rx="3" fill="#fff" stroke="var(--texto-tenue)" stroke-width="1"/>
-            <text x="418" y="143" class="sv-t">10 %</text>
-            <text x="512" y="141" class="sv-t-verde" font-weight="600">$3,600.00</text>
+            <text x="140" y="141" class="sv-t">A-8891</text>
+            <text x="250" y="141" class="sv-t">28-07-2026</text>
+            <text x="380" y="141" class="sv-t">$6,000.00</text>
+            <text x="470" y="141" class="sv-t" font-weight="600">$6,000.00</text>
 
             <!-- Fila marcada 2 -->
             <rect x="26" y="150" width="568" height="26" fill="var(--verde-claro)"/>
             <rect x="36" y="157" width="12" height="12" rx="2.5" class="sv-cabecera"/>
             <path d="M39 163 L41.5 165.5 L45.5 160.5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             <text x="60" y="167" class="sv-t">F-1043</text>
-            <text x="130" y="167" class="sv-t">A-8892</text>
-            <text x="222" y="167" class="sv-t">29-07-2026</text>
-            <text x="318" y="167" class="sv-t">$4,000.00</text>
-            <rect x="410" y="156" width="52" height="18" rx="3" fill="#fff" stroke="var(--texto-tenue)" stroke-width="1"/>
-            <text x="418" y="169" class="sv-t-tenue">0</text>
-            <text x="512" y="167" class="sv-t-verde" font-weight="600">$4,000.00</text>
+            <text x="140" y="167" class="sv-t">A-8892</text>
+            <text x="250" y="167" class="sv-t">29-07-2026</text>
+            <text x="380" y="167" class="sv-t">$4,000.00</text>
+            <text x="470" y="167" class="sv-t" font-weight="600">$4,000.00</text>
 
             <!-- Fila sin marcar -->
             <rect x="36" y="183" width="12" height="12" rx="2.5" fill="none" stroke="var(--texto-tenue)" stroke-width="1.2"/>
             <text x="60" y="193" class="sv-t-suave">F-1044</text>
-            <text x="130" y="193" class="sv-t-suave">A-8893</text>
-            <text x="222" y="193" class="sv-t-suave">30-07-2026</text>
-            <text x="318" y="193" class="sv-t-suave">$2,500.00</text>
-            <rect x="410" y="182" width="52" height="18" rx="3" fill="none" stroke="var(--texto-tenue)" stroke-width="1" stroke-dasharray="2 2"/>
-            <text x="512" y="193" class="sv-t-suave">—</text>
+            <text x="140" y="193" class="sv-t-suave">A-8893</text>
+            <text x="250" y="193" class="sv-t-suave">30-07-2026</text>
+            <text x="380" y="193" class="sv-t-suave">$2,500.00</text>
+            <text x="470" y="193" class="sv-t-suave">$2,500.00</text>
             <line x1="26" y1="202" x2="594" y2="202" class="sv-linea" stroke-width="1"/>
 
             <!-- Botón NC -->
@@ -1477,19 +1460,17 @@
 
             <!-- Resumen -->
             <rect x="26" y="252" width="268" height="126" rx="6" class="sv-hueco" stroke-width="1"/>
-            <text x="40" y="268" class="sv-t-suave" font-weight="600">Resumen de pago — 2 facturas</text>
-            <text x="40" y="285" class="sv-t-suave">Total facturas</text>
-            <text x="280" y="285" text-anchor="end" class="sv-t">$10,000.00</text>
-            <text x="40" y="301" class="sv-t-suave">Notas de crédito</text>
-            <text x="280" y="301" text-anchor="end" fill="#c0392b">− $2,000.00</text>
-            <text x="40" y="317" class="sv-t-suave">Descuentos por factura</text>
-            <text x="280" y="317" text-anchor="end" fill="#c0392b">− $400.00</text>
-            <text x="40" y="333" class="sv-t-suave">Descuento global (5%)</text>
-            <text x="280" y="333" text-anchor="end" fill="#c0392b">− $380.00</text>
-            <line x1="40" y1="341" x2="280" y2="341" class="sv-linea" stroke-width="1"/>
-            <rect x="36" y="347" width="248" height="26" rx="4" class="sv-acento" stroke-width="1"/>
-            <text x="46" y="364" class="sv-t-verde" font-size="10.5">Total final a pagar</text>
-            <text x="274" y="364" text-anchor="end" class="sv-t-verde" font-size="12">$7,220.00</text>
+            <text x="40" y="270" class="sv-t-suave" font-weight="600">Resumen de pago — 2 facturas</text>
+            <text x="40" y="290" class="sv-t-suave">Subtotal facturas</text>
+            <text x="280" y="290" text-anchor="end" class="sv-t">$8,620.69</text>
+            <text x="40" y="308" class="sv-t-suave">IVA (16%)</text>
+            <text x="280" y="308" text-anchor="end" class="sv-t">$1,379.31</text>
+            <line x1="40" y1="317" x2="280" y2="317" class="sv-linea" stroke-width="1"/>
+            <text x="40" y="333" class="sv-t" font-weight="700">Total facturas</text>
+            <text x="280" y="333" text-anchor="end" class="sv-t-verde" font-size="12">$10,000.00</text>
+            <rect x="36" y="342" width="248" height="28" rx="4" class="sv-acento" stroke-width="1"/>
+            <text x="46" y="360" class="sv-t-verde" font-size="10.5">Total final a pagar</text>
+            <text x="274" y="360" text-anchor="end" class="sv-t-verde" font-size="12">$7,600.00</text>
 
             <!-- Datos del pago -->
             <text x="312" y="266" class="sv-t" font-weight="700">Datos del pago</text>
@@ -1498,7 +1479,7 @@
             <rect x="312" y="304" width="282" height="26" rx="4" class="sv-hueco" stroke-width="1"/>
             <text x="322" y="321" class="sv-t-suave">Tipo de pago: Crédito</text>
             <rect x="312" y="334" width="282" height="26" rx="4" class="sv-hueco" stroke-width="1"/>
-            <text x="322" y="351" class="sv-t-suave">Descuento global: Pronto pago (5%) — principal</text>
+            <text x="322" y="351" class="sv-t-suave">Descuento: Pronto pago (5%) — principal</text>
             <rect x="312" y="364" width="136" height="26" rx="4" class="sv-cabecera"/>
             <text x="380" y="381" text-anchor="middle" class="sv-t-blanco">Registrar pago</text>
             <rect x="456" y="364" width="80" height="26" rx="4" class="sv-hueco" stroke-width="1"/>
@@ -1509,21 +1490,18 @@
             <text x="336" y="63.5" text-anchor="middle" class="sv-globo-t">1</text>
             <circle cx="16" cy="137" r="9" class="sv-globo"/>
             <text x="16" y="140.5" text-anchor="middle" class="sv-globo-t">2</text>
-            <circle cx="478" cy="139" r="9" class="sv-globo"/>
-            <text x="478" y="142.5" text-anchor="middle" class="sv-globo-t">3</text>
             <circle cx="222" cy="212" r="9" class="sv-globo"/>
-            <text x="222" y="215.5" text-anchor="middle" class="sv-globo-t">4</text>
+            <text x="222" y="215.5" text-anchor="middle" class="sv-globo-t">3</text>
             <circle cx="604" cy="287" r="9" class="sv-globo"/>
-            <text x="604" y="290.5" text-anchor="middle" class="sv-globo-t">5</text>
-            <circle cx="16" cy="360" r="9" class="sv-globo"/>
-            <text x="16" y="363.5" text-anchor="middle" class="sv-globo-t">6</text>
+            <text x="604" y="290.5" text-anchor="middle" class="sv-globo-t">4</text>
+            <circle cx="16" cy="356" r="9" class="sv-globo"/>
+            <text x="16" y="359.5" text-anchor="middle" class="sv-globo-t">5</text>
           </svg>
         </div>
         <figcaption>
           <b>Pestaña Nuevo pago</b>
-          Dos facturas marcadas por $10,000, una nota de crédito de $2,000 aplicada a la
-          primera, un 10 % de descuento solo en esa factura y un 5 % global: el total
-          final queda en $7,220.
+          Con dos facturas marcadas por $10,000, una nota de crédito de $2,000 y un
+          descuento del 5 %, el total final queda en $7,600.
         </figcaption>
       </figure>
 
@@ -1537,32 +1515,18 @@
           <span class="que">Marcan las facturas a pagar. Se conservan al cambiar de página.</span>
         </li>
         <li>
-          <b>Descuento por factura <span class="donde">columna Descuento %</span></b>
-          <span class="que">Opcional y solo para esa factura. La columna Neto muestra cómo queda el renglón.</span>
-        </li>
-        <li>
           <b>Aplicar notas de crédito</b>
           <span class="que">El número indica cuántas notas hay disponibles.</span>
         </li>
         <li>
           <b>Datos del pago</b>
-          <span class="que">Método, tipo y descuento global. Los dos primeros son obligatorios y vienen precargados del proveedor.</span>
+          <span class="que">Método y tipo son obligatorios. Vienen precargados del proveedor.</span>
         </li>
         <li>
           <b>Total final a pagar</b>
           <span class="que">La cifra que realmente sale de caja. Verifíquela antes de registrar.</span>
         </li>
       </ol>
-
-      <div class="aviso">
-        <div class="aviso-titulo">La columna <em>Descuento %</em></div>
-        <p>
-          A la derecha del <em>Saldo pendiente</em>, la tabla trae una columna
-          <strong>Descuento %</strong> y otra <strong>Neto</strong>. La primera es un
-          campo donde se escribe el porcentaje que aplica solo a esa factura; la segunda
-          muestra cómo queda el renglón. Se habilitan al marcar la factura.
-        </p>
-      </div>
 
       <ol class="pasos">
         <li>
@@ -1600,27 +1564,11 @@
         </li>
         <li>
           <div>
-            <strong>Capture el descuento de alguna factura, si aplica.</strong>
-            <p>
-              En la columna <em>Descuento %</em> de la tabla puede escribir un porcentaje
-              que afecte <strong>solo a esa factura</strong>. El campo se habilita cuando
-              la factura está marcada, y la columna <em>Neto</em> de la derecha muestra
-              cómo queda ese renglón.
-            </p>
-            <ul class="detalle">
-              <li>Es opcional y arranca vacío: no se precarga con el descuento del proveedor.</li>
-              <li>Se puede dejar en blanco en unas facturas y capturarlo en otras.</li>
-              <li>Si desmarca la factura, el porcentaje capturado se descarta.</li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <div>
             <strong>Complete los datos del pago, a la derecha.</strong>
             <ul class="detalle">
               <li><strong>Método de pago</strong> (obligatorio): Efectivo, Transferencia bancaria, Cheque o Tarjeta.</li>
               <li><strong>Tipo de pago</strong> (obligatorio): Contado o Crédito.</li>
-              <li><strong>Descuento global</strong> (opcional): ver abajo.</li>
+              <li><strong>Descuento</strong> (opcional): ver abajo.</li>
               <li><strong>Referencia</strong> (opcional): número de transferencia, folio del cheque, etc.</li>
               <li><strong>Notas</strong> (opcional): cualquier observación.</li>
             </ul>
@@ -1630,9 +1578,9 @@
           <div>
             <strong>Verifique el resumen de la izquierda.</strong>
             <p>
-              Muestra subtotal, IVA, notas de crédito, los descuentos por factura, el
-              descuento global y el <strong>Total final a pagar</strong>. Confirme que
-              ese número es el que va a salir de caja o del banco.
+              Muestra subtotal, IVA, notas de crédito, descuento y el
+              <strong>Total final a pagar</strong>. Confirme que ese número es el que
+              va a salir de caja o del banco.
             </p>
           </div>
         </li>
@@ -1656,63 +1604,16 @@
         Son solo una sugerencia: puede sobrescribirlos.
       </p>
       <p>
-        Lo mismo con el <strong>descuento global</strong>: si el proveedor tiene un
-        descuento marcado como principal, queda seleccionado por omisión. El
-        <strong>descuento por factura</strong>, en cambio, siempre arranca vacío.
+        Lo mismo con el <strong>descuento</strong>: si el proveedor tiene un descuento
+        marcado como principal, queda seleccionado por omisión.
       </p>
 
-      <h3>Los dos tipos de descuento</h3>
-      <p>
-        El formulario maneja dos descuentos distintos que <strong>pueden convivir en el
-        mismo pago</strong>. No son excluyentes: si captura los dos, se aplican uno tras
-        otro.
-      </p>
-      <div class="tabla-envoltorio">
-        <table>
-          <thead>
-            <tr><th>Descuento</th><th>Dónde se captura</th><th>A qué afecta</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Por factura</strong></td>
-              <td>Columna <em>Descuento %</em> de la tabla</td>
-              <td>Solo a esa factura, ya restadas sus notas de crédito</td>
-            </tr>
-            <tr>
-              <td><strong>Global</strong></td>
-              <td>Selector <em>Descuento global</em>, a la derecha</td>
-              <td>A todo el pago, después de los descuentos por factura</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h3>El descuento por factura</h3>
-      <p>
-        Sirve para casos puntuales: una factura que trae una condición especial, un
-        ajuste negociado en esa compra. Se escribe directo en el renglón de la tabla.
-      </p>
-      <ul>
-        <li>Solo se puede capturar en facturas <strong>ya marcadas</strong>.</li>
-        <li>Debe ser un número entre 0 y 100. Si se sale del rango, el campo se marca en rojo y el botón de registrar se apaga.</li>
-        <li>La columna <em>Neto</em> muestra en verde cómo queda la factura y, en rojo, cuánto se le descontó.</li>
-        <li>Al desmarcar la factura se descarta el porcentaje: si vuelve a marcarla, arranca vacío otra vez.</li>
-      </ul>
-
-      <h3>El selector de descuento global</h3>
+      <h3>El selector de descuento</h3>
       <ul>
         <li><strong>Sin descuento</strong> — no se aplica ninguno.</li>
         <li><strong>Los descuentos del proveedor</strong> — aparecen con su nombre y porcentaje; el principal viene marcado como tal.</li>
         <li><strong>Otro (porcentaje personalizado)</strong> — abre un campo para escribir el porcentaje a mano. Debe estar entre 0 y 100.</li>
       </ul>
-      <div class="aviso">
-        <div class="aviso-titulo">El nombre del descuento queda registrado</div>
-        <p>
-          Cuando elige uno de los descuentos del proveedor, su nombre (por ejemplo
-          <em>Pronto pago</em>) se guarda con el pago y aparece en el detalle y en el
-          PDF. Con el porcentaje personalizado solo se guarda la cifra.
-        </p>
-      </div>
 
       <h3>Si el botón <em>Registrar pago</em> está apagado</h3>
       <div class="tabla-envoltorio">
@@ -1724,7 +1625,6 @@
             <tr><td>No hay facturas seleccionadas</td><td>Marque al menos una casilla.</td></tr>
             <tr><td>Las notas de crédito superan el total</td><td>Quite alguna nota o reduzca los montos asignados.</td></tr>
             <tr><td>El porcentaje personalizado es inválido</td><td>Escriba un número entre 0 y 100.</td></tr>
-            <tr><td>Alguna factura tiene un descuento fuera de rango</td><td>Revise la columna <em>Descuento %</em>: el porcentaje debe estar entre 0 y 100.</td></tr>
           </tbody>
         </table>
       </div>
@@ -1747,44 +1647,18 @@
       </div>
 
       <p>
-        Vale la pena entender el orden de las operaciones, porque los descuentos
-        <strong>se aplican después de restar las notas de crédito</strong>, no antes, y
-        porque cuando hay descuento por factura y descuento global,
-        <strong>el global se calcula sobre lo que ya quedó descontado</strong>.
-      </p>
-
-      <p>
-        El cálculo va en dos etapas. Primero, factura por factura:
+        Vale la pena entender el orden de las operaciones, porque
+        <strong>el descuento se aplica después de restar las notas de crédito</strong>,
+        no antes.
       </p>
 
       <div class="formula">
         <ol>
-          <li><span>Saldo pendiente de la factura</span><span class="op">&nbsp;</span></li>
-          <li><span class="op">− Notas de crédito aplicadas a esa factura</span><span class="op">&nbsp;</span></li>
-          <li><span class="op">− Descuento por factura (% sobre lo anterior)</span><span class="op">&nbsp;</span></li>
-          <li class="total"><span>Neto de la factura</span><span>&nbsp;</span></li>
-        </ol>
-      </div>
-
-      <p>
-        Y después, sobre la suma de todos esos netos:
-      </p>
-
-      <div class="formula">
-        <ol>
-          <li><span>Suma de los netos de las facturas marcadas</span><span class="op">&nbsp;</span></li>
-          <li><span class="op">− Descuento global (% sobre esa suma)</span><span class="op">&nbsp;</span></li>
+          <li><span>Suma del saldo pendiente de las facturas marcadas</span><span class="op">= Total facturas</span></li>
+          <li><span class="op">− Notas de crédito aplicadas</span><span class="op">= Neto</span></li>
+          <li><span class="op">− Descuento (% sobre el Neto)</span><span class="op">&nbsp;</span></li>
           <li class="total"><span>Total final a pagar</span><span>&nbsp;</span></li>
         </ol>
-      </div>
-
-      <div class="aviso">
-        <div class="aviso-titulo">Los descuentos se encadenan, no se suman</div>
-        <p>
-          Una factura de $100 con 10 % propio y 5 % global <strong>no</strong> queda en
-          $85. El 10 % la baja a $90, y el 5 % global se calcula sobre esos $90: el
-          resultado es <strong>$85.50</strong>.
-        </p>
       </div>
 
       <p>
@@ -1795,28 +1669,19 @@
       </p>
 
       <h4>Ejemplo</h4>
-      <p>
-        Dos facturas: una de $6,000 con 10 % de descuento propio y otra de $4,000 sin
-        descuento. Se aplica una nota de crédito de $2,000 a la primera y un descuento
-        global del 5 %.
-      </p>
       <div class="tabla-envoltorio">
         <table>
           <thead>
             <tr><th>Concepto</th><th>Importe</th></tr>
           </thead>
           <tbody>
-            <tr><td>Factura F-1042</td><td>$6,000.00</td></tr>
-            <tr><td>Nota de crédito aplicada a F-1042</td><td>− $2,000.00</td></tr>
-            <tr><td>Descuento del 10 % sobre $4,000</td><td>− $400.00</td></tr>
-            <tr><td><strong>Neto de F-1042</strong></td><td><strong>$3,600.00</strong></td></tr>
-            <tr><td>Factura F-1043 (sin descuento)</td><td>$4,000.00</td></tr>
-            <tr><td><strong>Neto de F-1043</strong></td><td><strong>$4,000.00</strong></td></tr>
-            <tr><td>Suma de netos</td><td>$7,600.00</td></tr>
-            <tr><td>Descuento global del 5 % sobre $7,600</td><td>− $380.00</td></tr>
-            <tr><td><strong>Total final a pagar</strong></td><td><strong>$7,220.00</strong></td></tr>
-            <tr><td>Subtotal registrado</td><td>$6,224.14</td></tr>
-            <tr><td>IVA registrado</td><td>$995.86</td></tr>
+            <tr><td>Total de las facturas marcadas</td><td>$10,000.00</td></tr>
+            <tr><td>Nota de crédito aplicada</td><td>− $2,000.00</td></tr>
+            <tr><td>Neto</td><td>$8,000.00</td></tr>
+            <tr><td>Descuento del 5 % sobre el neto</td><td>− $400.00</td></tr>
+            <tr><td><strong>Total final a pagar</strong></td><td><strong>$7,600.00</strong></td></tr>
+            <tr><td>Subtotal registrado</td><td>$6,551.72</td></tr>
+            <tr><td>IVA registrado</td><td>$1,048.28</td></tr>
           </tbody>
         </table>
       </div>
@@ -1824,10 +1689,10 @@
       <div class="aviso">
         <div class="aviso-titulo">En el resumen</div>
         <p>
-          Las líneas de <em>Descuentos por factura</em>, <em>Descuento global</em>,
-          <em>Subtotal final</em>, <em>IVA final</em> y <em>Total final a pagar</em> solo
-          se muestran cuando hay notas de crédito o algún descuento. Si no hay ninguno,
-          el total de las facturas ya es el total del pago.
+          Las líneas de <em>Subtotal final</em>, <em>IVA final</em> y
+          <em>Total final a pagar</em> solo se muestran cuando hay notas de crédito o
+          descuento. Si no hay ninguno de los dos, el total de las facturas ya es el
+          total del pago.
         </p>
       </div>
     </section>
@@ -2137,10 +2002,10 @@
       <p>Al abrir <em>Ver detalles</em> encontrará, de arriba abajo:</p>
       <ul>
         <li><strong>Datos generales:</strong> folio, estado (con fecha y usuario que confirmó), tipo, método, referencia, fechas y notas.</li>
-        <li><strong>Facturas pagadas:</strong> qué facturas cubrió este pago, con el descuento individual que se le aplicó a cada una.</li>
+        <li><strong>Facturas pagadas:</strong> qué facturas cubrió este pago.</li>
         <li><strong>Notas de crédito aplicadas:</strong> las que se descontaron, con el monto usado de cada una.</li>
         <li><strong>Notas de crédito generadas:</strong> ver el aviso siguiente.</li>
-        <li><strong>Resumen financiero:</strong> total de facturas, descuentos por factura, descuento global (con su nombre, si vino de la lista del proveedor), subtotal, IVA y total del pago.</li>
+        <li><strong>Resumen financiero:</strong> total de facturas, descuentos, subtotal, IVA y total del pago.</li>
       </ul>
 
       <div class="aviso">
@@ -2288,29 +2153,15 @@
       </p>
 
       <h3>¿Cómo agrego descuentos individuales por factura?</h3>
-      <p>
-        Directo en la tabla de <em>Nuevo pago</em>: marque la factura y escriba el
-        porcentaje en la columna <strong>Descuento %</strong>. Afecta únicamente a esa
-        factura, y puede combinarse con el descuento global.
-      </p>
-
-      <h3>¿Puedo usar el descuento por factura y el global al mismo tiempo?</h3>
-      <p>
-        Sí. Se aplican en cadena: primero el de cada factura y después el global sobre lo
-        que quedó. Vea la <a href="#calculo">sección 8</a>.
+      <p> Para aplicar un descuento a una factura específica, primero debes crear una <strong>Nota de Crédito</strong> y
+        posteriormente aplicarla a la factura correspondiente. De esta manera, el descuento afectará únicamente a esa factura.
       </p>
 
       <h3>¿Por qué el descuento sale menor de lo que esperaba?</h3>
       <p>
-        Porque se calcula sobre el neto, ya restadas las notas de crédito y los
-        descuentos por factura. Un 5 % sobre $7,600 son $380, aunque las facturas
-        sumaran $10,000. Vea la <a href="#calculo">sección 8</a>.
-      </p>
-
-      <h3>Al hacer clic en el campo de descuento se desmarcaba la factura</h3>
-      <p>
-        Era un problema conocido y ya está corregido. Ahora puede escribir en la columna
-        <em>Descuento %</em> sin que la factura pierda la selección.
+        Porque se calcula sobre el neto, ya restadas las notas de crédito. Un 5 % sobre
+        $8,000 son $400, aunque las facturas sumaran $10,000. Vea la
+        <a href="#calculo">sección 8</a>.
       </p>
 
       <h3>El botón de talonario no aparece en la lista de proveedores</h3>
@@ -2330,7 +2181,7 @@
   </main>
 
   <footer class="pie">
-    Manual de usuario · Pagos a proveedores · Refaccionaria Victorino · Actualizado 10-08-2026
+    Manual de usuario · Pagos a proveedores · Refacciones Victorino · Actualizado 05-08-2026
   </footer>
 
 </div>
